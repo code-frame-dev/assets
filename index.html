@@ -1,1 +1,174 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BARBARAC — премиальное мороженое и сорбеты с наследием Сен-Тропе с 1988 года.">
+  <title>BARBARAC — since 1988</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=Michroma&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="brand-logo" href="#top" aria-label="BARBARAC — на главную">
+    <!-- Встроенный SVG логотип для мгновенной работы без папки assets -->
+    <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="28" font-family="'Michroma', sans-serif" font-size="20" fill="#1A2B4C" letter-spacing="2">BARBARAC</text>
+    </svg>
+  </a>
+
+  <nav aria-label="Навигация" class="desktop-nav">
+    <a href="#collection" data-i18n="navCollection">Коллекция</a>
+    <a href="#menu" data-i18n="navMenu">Вкусы</a>
+    <a href="#heritage" data-i18n="navAbout">О бренде</a>
+  </nav>
+
+  <div class="header-actions">
+    <div class="language-switcher">
+      <button type="button" data-lang="ru" class="active">RU</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="hy">HY</button>
+    </div>
+    <a class="header-link" href="#menu" data-i18n="headerMenu">Меню</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-copy fade-up">
+      <p class="eyebrow" data-i18n="heroEyebrow">SAINT-TROPEZ · SINCE 1988</p>
+      <h1 id="hero-title" data-i18n-html="heroTitle">
+        Солнечный вкус,<br>
+        <em>созданный для наслаждения.</em>
+      </h1>
+      <p class="intro" data-i18n="heroIntro">
+        BARBARAC — коллекция премиального мороженого и сорбетов. Чистый вкус, красивый ритуал, одно идеальное мгновение.
+      </p>
+      <a class="button" href="#menu">
+        <span data-i18n="heroButton">Открыть меню</span>
+        <span class="arrow">↘</span>
+      </a>
+    </div>
+
+    <div class="hero-art fade-up" style="transition-delay: 0.2s;">
+      <div class="sun-rays">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="30" fill="#D4AF37" opacity="0.6"/>
+          <g stroke="#D4AF37" stroke-width="1.5" opacity="0.4">
+            <line x1="100" y1="20" x2="100" y2="50" />
+            <line x1="100" y1="150" x2="100" y2="180" />
+            <line x1="20" y1="100" x2="50" y2="100" />
+            <line x1="150" y1="100" x2="180" y2="100" />
+            <line x1="43" y1="43" x2="65" y2="65" />
+            <line x1="135" y1="135" x2="157" y2="157" />
+            <line x1="43" y1="157" x2="65" y2="135" />
+            <line x1="135" y1="65" x2="157" y2="43" />
+          </g>
+        </svg>
+      </div>
+      <p class="art-caption" data-i18n-html="artCaption">la dolce vita<br><em>в каждой ложке</em></p>
+    </div>
+  </section>
+
+  <!-- STATEMENT SECTION -->
+  <section class="statement" id="collection">
+    <div class="statement-inner fade-up">
+      <p class="eyebrow" data-i18n="collectionEyebrow">ПРЕМИАЛЬНАЯ КОЛЛЕКЦИЯ</p>
+      <h2 data-i18n-html="statementTitle">
+        Мягкая текстура.<br>
+        Яркий характер.<br>
+        <em>Без лишнего.</em>
+      </h2>
+      <p data-i18n="statementText">
+        Классические рецепты, авторские сочетания и освежающие сорбеты — для того самого вкуса, к которому хочется возвращаться.
+      </p>
+    </div>
+  </section>
+
+  <!-- MENU SECTION -->
+  <section class="menu-section" id="menu">
+    <div class="section-heading fade-up">
+      <div>
+        <p class="eyebrow" data-i18n="menuEyebrow">МЕНЮ</p>
+        <h2 data-i18n-html="menuTitle">Выберите своё<br><em>солнце.</em></h2>
+      </div>
+      <div class="price-card">
+        <span data-i18n="oneScoop">1 шарик</span>
+        <strong data-i18n="fromPrice">от 850 ֏</strong>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <article class="flavor-group fade-up">
+        <h3 data-i18n="classics">Классика</h3>
+        <p class="group-note" data-i18n="classicsNote">Доведённая до совершенства.</p>
+        <ul>
+          <li data-i18n="fVanilla">Ваниль</li>
+          <li data-i18n="fChocolate">Шоколад</li>
+          <li data-i18n="fCoffee">Кофе</li>
+          <li data-i18n="fPistachio">Фисташка</li>
+        </ul>
+      </article>
+
+      <article class="flavor-group signature fade-up" style="transition-delay: 0.1s;">
+        <h3 data-i18n="signature">Фирменные</h3>
+        <p class="group-note" data-i18n="signatureNote">Неожиданные сочетания.</p>
+        <ul>
+          <li data-i18n="fDubai">Дубайский шоколад</li>
+          <li data-i18n="fSaltedCaramel">Солёная карамель</li>
+          <li data-i18n="fTiramisu">Тирамису</li>
+          <li data-i18n="fSpeculoos">Спекулос</li>
+        </ul>
+      </article>
+
+      <article class="flavor-group sorbets fade-up" style="transition-delay: 0.2s;">
+        <h3 data-i18n="sorbets">Сорбеты</h3>
+        <p class="group-note" data-i18n="sorbetsNote">Чистая фруктовая свежесть.</p>
+        <ul>
+          <li data-i18n="fLemon">Лимон</li>
+          <li data-i18n="fRaspberry">Малина</li>
+          <li data-i18n="fMango">Манго</li>
+          <li data-i18n="fPassion">Маракуйя</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- HERITAGE SECTION -->
+  <section class="heritage" id="heritage">
+    <div class="heritage-emblem fade-up">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#C87961" stroke-width="1" opacity="0.3"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="#C87961" stroke-width="1" opacity="0.5"/>
+        <text x="100" y="105" font-family="'Playfair Display', serif" font-size="14" fill="#C87961" text-anchor="middle" letter-spacing="3">1988</text>
+      </svg>
+    </div>
+    <div class="heritage-copy fade-up" style="transition-delay: 0.2s;">
+      <p class="eyebrow" data-i18n="heritageEyebrow">С 1988 ГОДА</p>
+      <h2 data-i18n-html="heritageTitle">Немного<br><em>солнца</em><br>каждый день.</h2>
+      <p data-i18n="heritageText">
+        BARBARAC вдохновлён Средиземноморьем: долгими летними вечерами, красивой простотой и радостью, которую не нужно объяснять.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="brand-logo footer-logo">BARBARAC</span>
+    <span class="footer-year">since 1988</span>
+    <a href="#top" class="back-to-top" data-i18n="backTop">Наверх ↑</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
