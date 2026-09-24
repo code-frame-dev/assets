@@ -39,3 +39,70 @@
     min-height: 180px;
   }
 }
+
+/* ---------- BRAND-MARK: название сайта, "залитое" текстурой мороженого ---------- */
+
+.brand-mark {
+  margin: 0;
+  text-align: center;
+  padding: 8vh 5vw 10vh;
+
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(64px, 15vw, 220px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+
+  background-image: url("assets/texture-vanilla-wide.jpg");
+  background-size: cover;
+  background-position: center 40%;
+
+  color: var(--orange); /* фолбэк для браузеров без background-clip:text */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports not (background-clip: text) {
+  .brand-mark {
+    background: none;
+    color: var(--ink);
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* ---------- ПЛАВНОЕ ПОЯВЛЕНИЕ БЛОКОВ ПРИ СКРОЛЛЕ ---------- */
+/* Работает только если JS успешно загрузился (html.js) — без JS всё видно сразу, ничего не потеряется */
+
+html.js .statement,
+html.js .menu-grid > .flavor-group,
+html.js .heritage > div,
+html.js .brand-mark {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+html.js .statement.is-visible,
+html.js .menu-grid > .flavor-group.is-visible,
+html.js .heritage > div.is-visible,
+html.js .brand-mark.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Карточки меню появляются с небольшой задержкой друг за другом */
+html.js .menu-grid > .flavor-group:nth-child(2) { transition-delay: .12s; }
+html.js .menu-grid > .flavor-group:nth-child(3) { transition-delay: .24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .statement,
+  html.js .menu-grid > .flavor-group,
+  html.js .heritage > div,
+  html.js .brand-mark {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
