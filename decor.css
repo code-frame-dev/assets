@@ -1,525 +1,104 @@
-/* BARBARAC — decorative texture, v4
-   Реальные фото текстуры мороженого (сгенерированные) вместо CSS-имитации.
-   Подключается ПОСЛЕ styles.css. */
+/* BARBARAC — decorative texture, v3
+   Сдержанный, "премиальный" вариант: без разноцветных шариков-конфетти.
+   Один тон, тонкая линия, лёгкое зерно бумаги — в духе editorial-дизайна.
+   Подключается ПОСЛЕ styles.css, ничего в нём не переопределяет. */
 
-/* ---------- HERO-ART: настоящая текстура вместо плоского жёлтого круга ---------- */
+/* ---------- HERO: один мягкий тёплый отсвет, без ярких пятен ---------- */
 
+.hero {
+  position: relative;
+}
+
+.hero-copy,
 .hero-art {
-  background: var(--yellow);
+  position: relative;
+  z-index: 1;
 }
 
-/* Фото — отдельным слоем позади лого/подписи, с медленным "дыханием" (Ken Burns),
-   чтобы картинка не стояла мёртвым грузом */
-.hero-art::before {
+.hero::before {
   content: "";
   position: absolute;
-  inset: 0;
   z-index: 0;
-
-  background: url("assets/texture-vanilla-square.jpg") center/cover no-repeat;
-
-  animation: heroKenBurns 16s ease-in-out infinite alternate;
+  width: 46%;
+  aspect-ratio: 1;
+  max-width: 520px;
+  top: -14%;
+  left: 2%;
+  border-radius: 50%;
+  filter: blur(40px);
+  background: radial-gradient(circle, var(--yellow) 0%, transparent 68%);
+  opacity: 0.18;
+  pointer-events: none;
 }
 
-@keyframes heroKenBurns {
-  from { transform: scale(1); }
-  to   { transform: scale(1.09); }
-}
+/* ---------- MENU: тонкая линейная "капля" мороженого как водяной знак, не узор ---------- */
 
-/* Кольца солнечных лучей поверх фотографии выглядят как царапины на объективе — убираем */
-.hero-art .sun-rays {
-  display: none;
-}
-
-/* Логотип и подпись должны читаться поверх фактурного фото */
-.hero-art img {
-  filter: drop-shadow(0 2px 10px rgba(32, 32, 29, .35));
-}
-
-.hero-art .art-caption {
-  color: #fff;
-  text-shadow: 0 1px 6px rgba(32, 32, 29, .55);
-}
-
-/* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
-
-.texture-band {
-  width: 100%;
-  height: 42vh;
-  min-height: 260px;
-  max-height: 480px;
-  background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
-
-  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы */
-  background-attachment: fixed;
-}
-
-@media (max-width: 800px) {
-  .texture-band {
-    height: 28vh;
-    min-height: 180px;
-
-    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем */
-    background-attachment: scroll;
-  }
-}
-
-/* ---------- BRAND-MARK: название сайта, "залитое" текстурой мороженого ---------- */
-
-.brand-mark {
+.menu-section {
   position: relative;
-  margin: 0;
-  text-align: center;
-  padding: 8vh 5vw 10vh;
-
-  font-family: "Playfair Display", serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: clamp(64px, 15vw, 220px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-
-  background-image:
-    linear-gradient(115deg,
-      transparent 35%,
-      rgba(255, 255, 255, .85) 48%,
-      transparent 61%),
-    url("assets/texture-vanilla-wide.jpg");
-  background-size: 320% 100%, cover;
-  background-position: -60% 0, center 40%;
-  background-repeat: no-repeat, no-repeat;
-
-  color: var(--orange); /* фолбэк для браузеров без background-clip:text */
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  overflow: hidden;
 }
 
-html.js .brand-mark.is-visible {
-  animation: brandShimmer 5s ease-in-out .6s 1;
-}
-
-@keyframes brandShimmer {
-  from { background-position: -60% 0, center 40%; }
-  to   { background-position: 160% 0, center 40%; }
-}
-
-@supports not (background-clip: text) {
-  .brand-mark {
-    background: none;
-    color: var(--ink);
-    -webkit-text-fill-color: currentColor;
-  }
-
-  html.js .brand-mark.is-visible {
-    animation: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .brand-mark.is-visible {
-    animation: none;
-  }
-}
-
-/* ---------- ПЛАВНОЕ ПОЯВЛЕНИЕ БЛОКОВ ПРИ СКРОЛЛЕ ---------- */
-/* Работает только если JS успешно загрузился (html.js) — без JS всё видно сразу, ничего не потеряется */
-
-html.js .statement,
-html.js .menu-grid > .flavor-group,
-html.js .heritage > div,
-html.js .visit-info,
-html.js .visit-block,
-html.js .brand-mark {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .8s ease, transform .8s ease;
-}
-
-html.js .statement.is-visible,
-html.js .menu-grid > .flavor-group.is-visible,
-html.js .heritage > div.is-visible,
-html.js .visit-info.is-visible,
-html.js .visit-block.is-visible,
-html.js .brand-mark.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Карточки меню появляются с небольшой задержкой друг за другом */
-html.js .menu-grid > .flavor-group:nth-child(2) { transition-delay: .12s; }
-html.js .menu-grid > .flavor-group:nth-child(3) { transition-delay: .24s; }
-
-/* Блоки контактов тоже появляются каскадом */
-html.js .visit-block:nth-child(2) { transition-delay: .1s; }
-html.js .visit-block:nth-child(3) { transition-delay: .2s; }
-html.js .visit-block:nth-child(4) { transition-delay: .3s; }
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .statement,
-  html.js .menu-grid > .flavor-group,
-  html.js .heritage > div,
-  html.js .visit-info,
-  html.js .visit-block,
-  html.js .brand-mark {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  html.js .hero-copy > *,
-  html.js .hero-art {
-    opacity: 1;
-    animation: none;
-  }
-}
-
-/* ============================================================
-   v5 — цветные шарики мороженого у каждого вкуса, секция "Найти
-   нас" (для длины страницы), больше анимаций.
-   ============================================================ */
-
-/* ---------- ШАПКА: лёгкая тень при прокрутке ---------- */
-
-.site-header {
-  transition: box-shadow .3s ease;
-}
-
-.site-header.is-scrolled {
-  box-shadow: 0 10px 30px rgba(32, 32, 29, .08);
-}
-
-/* ---------- HERO: мягкое появление при загрузке страницы ---------- */
-
-@keyframes riseIn {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@keyframes heroArtIn {
-  from { opacity: 0; transform: scale(.94); }
-  to   { opacity: 1; transform: none; }
-}
-
-html.js .hero-copy > * {
-  opacity: 0;
-  animation: riseIn .9s ease forwards;
-}
-
-html.js .hero-copy .eyebrow  { animation-delay: .05s; }
-html.js .hero-copy h1        { animation-delay: .18s; }
-html.js .hero-copy .intro    { animation-delay: .34s; }
-html.js .hero-copy .button   { animation-delay: .5s; }
-
-html.js .hero-art {
-  opacity: 0;
-  animation: heroArtIn 1s ease forwards;
-  animation-delay: .22s;
-}
-
-/* ---------- ШАРИКИ МОРОЖЕНОГО у каждого вкуса ---------- */
-/* Настоящая фотография текстуры (та самая сгенерированная), перекрашенная
-   под каждый вкус через CSS-фильтр (grayscale+sepia+hue-rotate — стандартный
-   приём дуотона по фото), а не плоская заливка цветом. Видны настоящие
-   сливочные разводы и блики, а не гладкий кружок. */
-
-@keyframes scoopBreathe {
-  0%, 100% { transform: translateY(-50%) scale(1); }
-  50%      { transform: translateY(-50%) scale(1.05); }
-}
-
-.flavor-group li {
+.section-heading,
+.menu-grid,
+.price-note {
   position: relative;
-  padding-left: 42px;
+  z-index: 1;
 }
 
-.flavor-group li::before {
+.menu-section::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 50%;
-  width: 27px;
-  height: 27px;
-  transform: translateY(-50%);
-  border-radius: 50%;
-
-  background-image:
-    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, .8), transparent 48%),
-    url("assets/texture-vanilla-square.jpg");
-  background-size: 100% 100%, 240% 240%;
-  background-position: 0 0, var(--scoop-pos, 20% 20%);
-  background-repeat: no-repeat, no-repeat;
-
-  filter: var(--scoop-filter, none);
-
-  box-shadow:
-    inset -3px -4px 6px rgba(0, 0, 0, .28),
-    0 2px 4px rgba(32, 32, 29, .2);
-
-  animation: scoopBreathe 5s ease-in-out infinite;
-  animation-delay: var(--scoop-delay, 0s);
-
-  transition: box-shadow .3s ease;
+  z-index: 0;
+  right: -4%;
+  bottom: -8%;
+  width: 30%;
+  max-width: 340px;
+  aspect-ratio: 0.8;
+  opacity: 0.05;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 260' fill='none' stroke='%2320201d' stroke-width='2'%3E%3Cpath d='M100 250 L70 140 A45 45 0 1 1 130 140 Z'/%3E%3Cpath d='M55 130 A45 30 0 0 0 145 130'/%3E%3Ccircle cx='100' cy='95' r='42'/%3E%3Ccircle cx='60' cy='70' r='30'/%3E%3Ccircle cx='140' cy='75' r='26'/%3E%3C/svg%3E");
 }
 
-html.js .flavor-group li:hover::before {
-  animation-play-state: paused;
-  transform: translateY(-50%) scale(1.22);
-  box-shadow:
-    inset -3px -4px 6px rgba(0, 0, 0, .28),
-    0 5px 12px rgba(32, 32, 29, .3);
-}
+/* ---------- HERITAGE: тонкий контур того же "шарика" рядом с эмблемой ---------- */
 
-/* Лёгкий разнобой по времени "дыхания", чтобы шарики не пульсировали хором */
-.flavor-group li:nth-child(3n+1) { --scoop-delay: 0s; }
-.flavor-group li:nth-child(3n+2) { --scoop-delay: -1.6s; }
-.flavor-group li:nth-child(3n+3) { --scoop-delay: -3.2s; }
-
-/* Каждому вкусу — свой участок фотографии (подальше от вытисненной надписи
-   в центре кадра) и свой цветовой фильтр поверх настоящей текстуры */
-
-/* Классика */
-.flavor-group li[data-flavor="vanilla"]        { --scoop-pos: 6% 8%;   --scoop-filter: brightness(1.05) saturate(.9); }
-.flavor-group li[data-flavor="chocolate"]      { --scoop-pos: 92% 10%; --scoop-filter: grayscale(1) sepia(1) hue-rotate(-6deg) saturate(2.4) brightness(.42) contrast(1.15); }
-.flavor-group li[data-flavor="coffee"]         { --scoop-pos: 8% 90%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(6deg) saturate(2) brightness(.58) contrast(1.1); }
-.flavor-group li[data-flavor="coconut"]        { --scoop-pos: 90% 92%; --scoop-filter: brightness(1.16) saturate(.55); }
-.flavor-group li[data-flavor="hazelnut"]       { --scoop-pos: 4% 45%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(10deg) saturate(1.7) brightness(.78) contrast(1.05); }
-.flavor-group li[data-flavor="stracciatella"]  { --scoop-pos: 95% 45%; --scoop-filter: brightness(1.1) saturate(.75); }
-.flavor-group li[data-flavor="mintChocolate"]  { --scoop-pos: 15% 5%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(95deg) saturate(1.5) brightness(.98) contrast(1.05); }
-.flavor-group li[data-flavor="frozenYogurt"]   { --scoop-pos: 85% 6%;  --scoop-filter: brightness(1.2) saturate(.45); }
-
-/* Фирменные */
-.flavor-group li[data-flavor="dubaiChocolate"] { --scoop-pos: 6% 9%;   --scoop-filter: grayscale(1) sepia(1) hue-rotate(-14deg) saturate(2.5) brightness(.4) contrast(1.2); }
-.flavor-group li[data-flavor="cookies"]        { --scoop-pos: 92% 8%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(4deg) saturate(1.6) brightness(.86) contrast(1.05); }
-.flavor-group li[data-flavor="whiteChocolate"] { --scoop-pos: 7% 88%;  --scoop-filter: brightness(1.12) saturate(.7); }
-.flavor-group li[data-flavor="pistachio"]      { --scoop-pos: 90% 90%; --scoop-filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(1.5) brightness(.95) contrast(1.05); }
-.flavor-group li[data-flavor="snikky"]         { --scoop-pos: 4% 45%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(6deg) saturate(1.8) brightness(.82) contrast(1.05); }
-.flavor-group li[data-flavor="speculoos"]      { --scoop-pos: 95% 45%; --scoop-filter: grayscale(1) sepia(1) hue-rotate(12deg) saturate(2) brightness(.7) contrast(1.1); }
-.flavor-group li[data-flavor="tiramisu"]       { --scoop-pos: 15% 5%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(3deg) saturate(1.3) brightness(.9) contrast(1.02); }
-.flavor-group li[data-flavor="saltedCaramel"]  { --scoop-pos: 85% 6%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(4deg) saturate(2.3) brightness(.84) contrast(1.1); }
-.flavor-group li[data-flavor="brownies"]       { --scoop-pos: 6% 9%;   --scoop-filter: grayscale(1) sepia(1) hue-rotate(-8deg) saturate(2.2) brightness(.3) contrast(1.2); }
-
-/* Сорбеты */
-.flavor-group li[data-flavor="apricotSorbet"]     { --scoop-pos: 92% 8%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(-4deg) saturate(2.5) brightness(.96) contrast(1.08); }
-.flavor-group li[data-flavor="lemonSorbet"]       { --scoop-pos: 7% 88%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(20deg) saturate(2.1) brightness(1.08) contrast(1.05); }
-.flavor-group li[data-flavor="strawberrySorbet"]  { --scoop-pos: 90% 90%; --scoop-filter: grayscale(1) sepia(1) hue-rotate(-48deg) saturate(2.1) brightness(.98) contrast(1.08); }
-.flavor-group li[data-flavor="raspberrySorbet"]   { --scoop-pos: 4% 45%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(-58deg) saturate(2.5) brightness(.88) contrast(1.1); }
-.flavor-group li[data-flavor="mangoSorbet"]       { --scoop-pos: 95% 45%; --scoop-filter: grayscale(1) sepia(1) hue-rotate(8deg) saturate(2.4) brightness(1.02) contrast(1.08); }
-.flavor-group li[data-flavor="passionFruit"]      { --scoop-pos: 15% 5%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(-4deg) saturate(2.4) brightness(.95) contrast(1.08); }
-.flavor-group li[data-flavor="chocolateSorbet"]   { --scoop-pos: 85% 6%;  --scoop-filter: grayscale(1) sepia(1) hue-rotate(-8deg) saturate(2.1) brightness(.26) contrast(1.2); }
-
-@media (prefers-reduced-motion: reduce) {
-  .flavor-group li::before {
-    animation: none;
-  }
-}
-
-/* ---------- Каскадное появление строк списка вкусов ---------- */
-
-html.js .flavor-group li {
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity .5s ease, transform .5s ease;
-}
-
-html.js .flavor-group.is-visible li {
-  opacity: 1;
-  transform: none;
-}
-
-html.js .flavor-group.is-visible li:nth-child(1) { transition-delay: .04s; }
-html.js .flavor-group.is-visible li:nth-child(2) { transition-delay: .09s; }
-html.js .flavor-group.is-visible li:nth-child(3) { transition-delay: .14s; }
-html.js .flavor-group.is-visible li:nth-child(4) { transition-delay: .19s; }
-html.js .flavor-group.is-visible li:nth-child(5) { transition-delay: .24s; }
-html.js .flavor-group.is-visible li:nth-child(6) { transition-delay: .29s; }
-html.js .flavor-group.is-visible li:nth-child(7) { transition-delay: .34s; }
-html.js .flavor-group.is-visible li:nth-child(8) { transition-delay: .39s; }
-html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
-
-/* ---------- НАЙТИ НАС: новая секция для длины страницы ---------- */
-
-.visit {
-  max-width: var(--max);
-  margin: auto;
-  padding: 14vh 5vw;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8vw;
-  align-items: start;
-
-  border-top: 1px solid var(--line);
-}
-
-.visit-info h2 {
-  font-size: clamp(44px, 5.5vw, 68px);
-  margin-bottom: 20px;
-}
-
-.visit-info > p:last-child {
-  max-width: 420px;
-  color: #666159;
-  line-height: 1.8;
-  font-size: 16px;
-}
-
-.visit-details {
-  display: grid;
-  gap: 30px;
-}
-
-.visit-block {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
-}
-
-.visit-block:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-/* ---------- Иконки вместо голых подписей ---------- */
-
-.visit-icon {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--ink);
-
-  box-shadow: 0 3px 10px rgba(32, 32, 29, .1);
-
-  transition: transform .35s ease, background .35s ease, color .35s ease;
-}
-
-.visit-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.visit-block:hover .visit-icon {
-  background: var(--orange);
-  color: #fff;
-  transform: translateY(-3px) rotate(-6deg);
-}
-
-.visit-label {
-  display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .15em;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-.visit-block p {
-  font-size: 17px;
-  margin: 0;
-}
-
-.visit-block a {
-  transition: color .25s;
-}
-
-.visit-block > div > p a:hover {
-  color: var(--orange);
-}
-
-/* Кнопки-иконки соцсетей */
-
-.visit-social {
-  display: flex;
-  gap: 12px;
-}
-
-.visit-social-btn {
-  width: 40px;
-  height: 40px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--ink);
-
-  box-shadow: 0 3px 10px rgba(32, 32, 29, .1);
-
-  transition: transform .3s ease, background .3s ease, color .3s ease;
-}
-
-.visit-social-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.visit-social-btn:hover {
-  background: var(--orange);
-  color: #fff;
-  transform: translateY(-3px) scale(1.06);
-}
-
-@media (max-width: 800px) {
-  .visit {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 10vh 5vw;
-  }
-}
-
-/* ---------- ГЕРБ/ЭМБЛЕМА: лёгкое покачивание, будто медальон на ленте ---------- */
-
-@keyframes emblemFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-8px) rotate(-2deg); }
-}
-
-html.js .heritage-emblem {
-  animation: emblemFloat 6s ease-in-out infinite;
-}
-
-html.js .heritage-emblem img {
-  transition: transform .4s ease;
-}
-
-html.js .heritage-emblem:hover img {
-  transform: scale(1.06);
-}
-
-/* ---------- ЗЕРНО: едва заметная фотографическая "плёнка" по всей странице ---------- */
-/* Убирает ощущение стерильно-гладкого экрана, добавляя микрошум поверх всего.
-   pointer-events:none + очень низкая непрозрачность — не мешает читать и кликать. */
-
-body {
+.heritage {
   position: relative;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-
-  opacity: .035;
-  mix-blend-mode: overlay;
-
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
+.heritage-emblem,
+.heritage > div {
+  position: relative;
+  z-index: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html.js .heritage-emblem {
-    animation: none;
+.heritage::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22%;
+  max-width: 260px;
+  aspect-ratio: 0.8;
+  opacity: 0.06;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 260' fill='none' stroke='%2320201d' stroke-width='2'%3E%3Cpath d='M100 250 L70 140 A45 45 0 1 1 130 140 Z'/%3E%3Cpath d='M55 130 A45 30 0 0 0 145 130'/%3E%3Ccircle cx='100' cy='95' r='42'/%3E%3Ccircle cx='60' cy='70' r='30'/%3E%3Ccircle cx='140' cy='75' r='26'/%3E%3C/svg%3E");
+}
+
+/* ---------- Заголовки групп меню: тонкая линия-подчёркивание вместо цветной точки ---------- */
+
+.flavor-group h3 {
+  position: relative;
+  padding-left: 0;
+}
+
+@media (max-width: 800px) {
+  .hero::before {
+    opacity: 0.12;
   }
 }
