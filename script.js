@@ -5,6 +5,7 @@ const translations = {
     navCollection: "Коллекция",
     navMenu: "Вкусы",
     navAbout: "О бренде",
+    navVisit: "Контакты",
     headerMenu: "Меню",
 
     heroTitle: "Солнечный вкус,<br><em>созданный для наслаждения.</em>",
@@ -35,6 +36,16 @@ const translations = {
     heritageText: "BARBARAC вдохновлён Средиземноморьем: долгими летними вечерами, красивой простотой и радостью, которую не нужно объяснять.",
 
     backTop: "Наверх ↑",
+
+    visitEyebrow: "НАЙТИ НАС",
+    visitTitle: "Заходите<br><em>в гости.</em>",
+    visitText: "Загляните за своей порцией солнца — будем рады вас видеть.",
+    visitAddressLabel: "Адрес",
+    visitAddress: "Впишите адрес вашего заведения",
+    visitHoursLabel: "Часы работы",
+    visitHours: "Ежедневно, 10:00 – 23:00",
+    visitSocialLabel: "Соцсети",
+    visitInstagram: "@barbarac",
 
     flavors: {
       vanilla: "Ваниль",
@@ -70,6 +81,7 @@ const translations = {
     navCollection: "Collection",
     navMenu: "Flavors",
     navAbout: "About",
+    navVisit: "Visit",
     headerMenu: "Menu",
 
     heroTitle: "A sunny taste,<br><em>made to be savored.</em>",
@@ -100,6 +112,16 @@ const translations = {
     heritageText: "BARBARAC is inspired by the Mediterranean: long summer evenings, beautiful simplicity, and joy that needs no explanation.",
 
     backTop: "Back to top ↑",
+
+    visitEyebrow: "FIND US",
+    visitTitle: "Come<br><em>visit us.</em>",
+    visitText: "Stop by for your scoop of sunshine — we'd love to see you.",
+    visitAddressLabel: "Address",
+    visitAddress: "Add your shop's address here",
+    visitHoursLabel: "Opening hours",
+    visitHours: "Daily, 10:00 AM – 11:00 PM",
+    visitSocialLabel: "Social",
+    visitInstagram: "@barbarac",
 
     flavors: {
       vanilla: "Vanilla",
@@ -135,6 +157,7 @@ const translations = {
     navCollection: "Հավաքածու",
     navMenu: "Համեր",
     navAbout: "Բրենդի մասին",
+    navVisit: "Կապ",
     headerMenu: "Մենյու",
 
     heroTitle: "Արևոտ համ,<br><em>ստեղծված հաճույքի համար։</em>",
@@ -165,6 +188,16 @@ const translations = {
     heritageText: "BARBARAC-ը ներշնչված է Միջերկրածովով՝ երկար ամառային երեկոներով, գեղեցիկ պարզությամբ և ուրախությամբ, որը բացատրություն չի պահանջում։",
 
     backTop: "Վերև ↑",
+
+    visitEyebrow: "ԳՏԻՐ ՄԵԶ",
+    visitTitle: "Այցելեք<br><em>մեզ։</em>",
+    visitText: "Եկեք ձեր արևի բաժինը վերցնելու — միշտ ուրախ կլինենք ձեզ տեսնել։",
+    visitAddressLabel: "Հասցե",
+    visitAddress: "Նշեք ձեր խանութի հասցեն",
+    visitHoursLabel: "Աշխատանքային ժամեր",
+    visitHours: "Ամեն օր, 10:00 – 23:00",
+    visitSocialLabel: "Սոցցանցեր",
+    visitInstagram: "@barbarac",
 
     flavors: {
       vanilla: "Վանիլ",
@@ -265,7 +298,7 @@ document.addEventListener("DOMContentLoaded", initLanguageSwitcher);
 
 function initScrollReveal() {
   const targets = document.querySelectorAll(
-    ".statement, .menu-grid > .flavor-group, .heritage > div, .brand-mark"
+    ".statement, .menu-grid > .flavor-group, .heritage > div, .visit-info, .visit-block, .brand-mark"
   );
 
   if (!targets.length) return;
@@ -292,3 +325,19 @@ function initScrollReveal() {
 }
 
 document.addEventListener("DOMContentLoaded", initScrollReveal);
+
+// ---------- Тень у шапки при прокрутке ----------
+
+function initHeaderScroll() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const onScroll = () => {
+    header.classList.toggle("is-scrolled", window.scrollY > 12);
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+document.addEventListener("DOMContentLoaded", initHeaderScroll);
