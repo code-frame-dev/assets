@@ -1,6 +1,12 @@
 /* BARBARAC — decorative texture, v4
    Реальные фото текстуры мороженого (сгенерированные) вместо CSS-имитации.
-   Подключается ПОСЛЕ styles.css. */
+   Подключается ПОСЛЕ styles.css.
+
+   ВАЖНО: hero, полоса-баннер и большая надпись BARBARAC используют
+   assets/texture-vanilla-nologo.jpg — версию БЕЗ вытисненного лого "Barbarac"
+   в кадре (лого там повторялось бы слишком часто). Шарики вкусов в меню
+   по-прежнему используют texture-vanilla-square.jpg — там кадрирование
+   уже уводит взгляд в угол фото, подальше от лого, так что это не мешает. */
 
 /* ---------- HERO-ART: настоящая текстура вместо плоского жёлтого круга ---------- */
 
@@ -16,7 +22,7 @@
   inset: 0;
   z-index: 0;
 
-  background: url("assets/texture-vanilla-square.jpg") center/cover no-repeat;
+  background: url("assets/texture-vanilla-nologo.jpg") center/cover no-repeat;
 
   animation: heroKenBurns 16s ease-in-out infinite alternate;
 }
@@ -48,7 +54,7 @@
   height: 42vh;
   min-height: 260px;
   max-height: 480px;
-  background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
+  background: var(--yellow) url("assets/texture-vanilla-nologo.jpg") center/cover no-repeat;
 
   /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы */
   background-attachment: fixed;
@@ -84,7 +90,7 @@
       transparent 35%,
       rgba(255, 255, 255, .85) 48%,
       transparent 61%),
-    url("assets/texture-vanilla-wide.jpg");
+    url("assets/texture-vanilla-nologo.jpg");
   background-size: 320% 100%, cover;
   background-position: -60% 0, center 40%;
   background-repeat: no-repeat, no-repeat;
