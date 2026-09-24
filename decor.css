@@ -103,6 +103,7 @@ html.js .menu-grid > .flavor-group:nth-child(3) { transition-delay: .24s; }
 /* Блоки контактов тоже появляются каскадом */
 html.js .visit-block:nth-child(2) { transition-delay: .1s; }
 html.js .visit-block:nth-child(3) { transition-delay: .2s; }
+html.js .visit-block:nth-child(4) { transition-delay: .3s; }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .statement,
@@ -317,6 +318,11 @@ html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
 
 .visit-block a {
   transition: color .25s;
+}
+
+.visit-social {
+  display: flex;
+  gap: 22px;
 }
 
 .visit-block a:hover {
