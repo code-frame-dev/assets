@@ -260,3 +260,35 @@ function initLanguageSwitcher() {
 }
 
 document.addEventListener("DOMContentLoaded", initLanguageSwitcher);
+
+// ---------- Плавное появление блоков при скролле ----------
+
+function initScrollReveal() {
+  const targets = document.querySelectorAll(
+    ".statement, .menu-grid > .flavor-group, .heritage > div, .brand-mark"
+  );
+
+  if (!targets.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    // На всякий случай, если браузер совсем древний — просто показать всё сразу
+    targets.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+  );
+
+  targets.forEach((el) => observer.observe(el));
+}
+
+document.addEventListener("DOMContentLoaded", initScrollReveal);
