@@ -50,12 +50,6 @@
 
 /* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
 
-/* Параллакс теперь собственный, на JS (см. initTextureParallax в script.js),
-   а не через background-attachment: fixed — тот на мобильных браузерах (Safari/Chrome
-   на телефоне) фактически не двигается при прокрутке, поэтому картинка казалась
-   "мёртвой". JS-версия двигает внутренний слой ::before и одинаково плавно
-   работает и на десктопе, и на телефоне. */
-
 .texture-band {
   position: relative;
   overflow: hidden;
@@ -64,43 +58,43 @@
   height: 42vh;
   min-height: 260px;
   max-height: 480px;
-  background: var(--yellow);
-}
+  background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
 
-.texture-band::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  /* Небольшой фиксированный запас в пикселях (а не в процентах!) — ровно
-     под ход параллакса, без заметного "зума"/обрезки картинки */
-  top: -24px;
-  bottom: -24px;
-  z-index: 0;
-
-  background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
-
-  transform: translateY(var(--parallax-y, 0px));
-  will-change: transform;
+  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы (только десктоп) */
+  background-attachment: fixed;
 }
 
 @media (max-width: 800px) {
   .texture-band {
-    /* Полоса на мобильных стала заметно выше — сама картинка при этом
-       не увеличивается/не обрезается сильнее, просто занимает больше места */
-    height: 38vh;
-    min-height: 260px;
+    height: 28vh;
+    min-height: 180px;
+
+    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем,
+       но взамен даём картинке собственное "дыхание" (медленный зум),
+       чтобы полоса не была совсем статичной */
+    background-attachment: scroll;
+    background-image: none;
   }
 
   .texture-band::before {
-    top: -36px;
-    bottom: -36px;
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
+    animation: bandKenBurns 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes bandKenBurns {
+    from { transform: scale(1); }
+    to   { transform: scale(1.12); }
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
   .texture-band::before {
-    transform: none !important;
+    animation: none;
   }
 }
 
@@ -415,12 +409,12 @@ html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
 
 .visit-social {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .visit-social-btn {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 
   display: grid;
   place-items: center;
@@ -497,64 +491,5 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   html.js .heritage-emblem {
     animation: none;
-  }
-}
-
-/* ---------- ПЛАВАЮЩАЯ КНОПКА "НАВЕРХ" ---------- */
-/* Скрыта в начале страницы, появляется после того, как прокручено больше
-   половины (см. initBackToTop в script.js) — обычная практика для сайтов. */
-
-.back-to-top {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 50;
-
-  width: 46px;
-  height: 46px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-
-  box-shadow: 0 10px 24px rgba(32, 32, 29, .25);
-
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-
-  transition: opacity .35s ease, transform .35s ease, visibility .35s, background .3s ease;
-}
-
-.back-to-top svg {
-  width: 20px;
-  height: 20px;
-}
-
-.back-to-top.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.back-to-top:hover {
-  background: var(--orange);
-}
-
-@media (max-width: 800px) {
-  .back-to-top {
-    right: 16px;
-    bottom: 16px;
-    width: 42px;
-    height: 42px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .back-to-top {
-    transition: opacity .35s ease, visibility .35s;
   }
 }
