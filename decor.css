@@ -1,671 +1,518 @@
-/* BARBARAC — decorative texture, v4
-   Реальные фото текстуры мороженого (сгенерированные) вместо CSS-имитации.
-   Подключается ПОСЛЕ styles.css.
+// BARBARAC — i18n (RU / EN / HY)
 
-   ВАЖНО: hero и большая надпись BARBARAC используют assets/texture-vanilla-nologo.jpg
-   — версию БЕЗ вытисненного лого "Barbarac" в кадре. Полоса-баннер (.texture-band),
-   наоборот, специально показывает фото С лого — на десктопе широкую версию
-   (assets/texture-vanilla-wide.jpg), а на мобильных квадратную (assets/texture-vanilla-square.jpg),
-   которая лучше кадрируется в узкую полосу. В меню вкусов фото больше не
-   используется — вместо шариков там простые золотые точки в стиле логотипа
-   (см. .flavor-group li::before). */
+const translations = {
+  ru: {
+    navCollection: "Коллекция",
+    navMenu: "Вкусы",
+    navAbout: "О бренде",
+    navVisit: "Контакты",
+    headerMenu: "Меню",
 
-/* ---------- HERO-ART: настоящая текстура вместо плоского жёлтого круга ---------- */
+    heroTitle: "Солнечный вкус,<br><em>созданный для наслаждения.</em>",
+    heroIntro: "BARBARAC — коллекция премиального мороженого и сорбетов. Чистый вкус, красивый ритуал, одно идеальное мгновение.",
+    heroButton: "Открыть меню",
+    artCaption: "la dolce vita<br>в каждой ложке",
 
-.hero-art {
-  background: var(--yellow);
-}
+    collectionEyebrow: "ПРЕМИАЛЬНАЯ КОЛЛЕКЦИЯ",
+    statementTitle: "Мягкая текстура.<br>Яркий характер.<br><em>Без лишнего.</em>",
+    statementText: "Классические рецепты, авторские сочетания и освежающие сорбеты — для того самого вкуса, к которому хочется возвращаться.",
 
-/* Фото — отдельным слоем позади лого/подписи, с медленным "дыханием" (Ken Burns),
-   чтобы картинка не стояла мёртвым грузом */
-.hero-art::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+    menuEyebrow: "МЕНЮ",
+    menuTitle: "Выберите своё<br><em>солнце.</em>",
+    oneScoop: "1 шарик",
+    fromPrice: "от 850 ֏",
 
-  background: url("assets/texture-vanilla-nologo.jpg") center/cover no-repeat;
+    classics: "Классика",
+    classicsNote: "Классика, доведённая до совершенства.",
+    signature: "Фирменные",
+    signatureNote: "Неожиданные сочетания с фирменным почерком.",
+    sorbets: "Сорбеты",
+    sorbetsNote: "Чистая фруктовая свежесть.",
 
-  animation: heroKenBurns 16s ease-in-out infinite alternate;
-}
+    priceNote: "Классика — 850 ֏ за шарик · Фирменные — 1000 ֏ за шарик",
 
-@keyframes heroKenBurns {
-  from { transform: scale(1); }
-  to   { transform: scale(1.09); }
-}
+    heritageEyebrow: "С 1988 ГОДА",
+    heritageTitle: "Немного<br><em>солнца</em><br>каждый день.",
+    heritageText: "BARBARAC вдохновлён Средиземноморьем: долгими летними вечерами, красивой простотой и радостью, которую не нужно объяснять.",
 
-/* Кольца солнечных лучей поверх фотографии выглядят как царапины на объективе — убираем */
-.hero-art .sun-rays {
-  display: none;
-}
+    backTop: "Наверх ↑",
+    backTopAria: "Наверх",
 
-/* Логотип и подпись должны читаться поверх фактурного фото */
-.hero-art img {
-  filter: drop-shadow(0 2px 10px rgba(32, 32, 29, .35));
-}
+    visitEyebrow: "НАЙТИ НАС",
+    visitTitle: "Заходите<br><em>в гости.</em>",
+    visitText: "Загляните за своей порцией солнца — будем рады вас видеть.",
+    visitAddressLabel: "Адрес",
+    visitAddress: "Открыть на карте",
+    visitHoursLabel: "Часы работы",
+    visitHours: "Ежедневно, 09:00 – 00:00",
+    visitPhoneLabel: "Телефон",
+    visitSocialLabel: "Соцсети",
 
-.hero-art .art-caption {
-  color: #fff;
-  text-shadow: 0 1px 6px rgba(32, 32, 29, .55);
-}
+    flavors: {
+      vanilla: "Ваниль",
+      chocolate: "Шоколад",
+      coffee: "Кофе",
+      coconut: "Кокос",
+      hazelnut: "Фундук",
+      stracciatella: "Страчателла",
+      mintChocolate: "Мятный шоколад",
+      frozenYogurt: "Замороженный йогурт",
 
-/* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
+      dubaiChocolate: "Дубайский шоколад",
+      cookies: "Печенье",
+      whiteChocolate: "Белый шоколад",
+      pistachio: "Фисташка",
+      snikky: "Сникерс",
+      speculoos: "Спекулос",
+      tiramisu: "Тирамису",
+      saltedCaramel: "Солёная карамель",
+      brownies: "Брауни",
 
-/* Десктоп: та самая "старая хорошая" версия — background-attachment: fixed,
-   картинка мягко проступает при прокрутке. На мобильных браузерах fixed
-   фактически не двигается, поэтому там то же самое движение имитируется
-   через JS (см. initTextureParallax в script.js), двигая внутренний слой
-   ::before через CSS-переменную --parallax-y. */
+      apricotSorbet: "Абрикосовый сорбет",
+      lemonSorbet: "Лимонный сорбет",
+      strawberrySorbet: "Клубничный сорбет",
+      raspberrySorbet: "Малиновый сорбет",
+      mangoSorbet: "Манговый сорбет",
+      passionFruit: "Маракуйя",
+      chocolateSorbet: "Шоколадный сорбет"
+    }
+  },
 
-.texture-band {
-  position: relative;
+  en: {
+    navCollection: "Collection",
+    navMenu: "Flavors",
+    navAbout: "About",
+    navVisit: "Visit",
+    headerMenu: "Menu",
 
-  width: 100%;
-  height: 42vh;
-  min-height: 260px;
-  max-height: 480px;
+    heroTitle: "A sunny taste,<br><em>made to be savored.</em>",
+    heroIntro: "BARBARAC is a collection of premium ice cream and sorbets. Pure flavor, a beautiful ritual, one perfect moment.",
+    heroButton: "Open menu",
+    artCaption: "la dolce vita<br>in every spoon",
 
-  background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
-  background-attachment: fixed;
-}
+    collectionEyebrow: "PREMIUM COLLECTION",
+    statementTitle: "Soft texture.<br>Bold character.<br><em>Nothing extra.</em>",
+    statementText: "Classic recipes, signature combinations and refreshing sorbets — for the taste you'll want to return to.",
 
-@media (max-width: 800px) {
-  .texture-band {
-    /* Полоса на мобильных выше — сама картинка при этом не увеличена/не обрезана,
-       просто занимает больше места */
-    height: 38vh;
-    min-height: 260px;
-    overflow: hidden;
+    menuEyebrow: "MENU",
+    menuTitle: "Choose your<br><em>sunshine.</em>",
+    oneScoop: "1 scoop",
+    fromPrice: "from 850 ֏",
 
-    /* fixed на телефонах не двигается — прячем статичный фон и вместо него
-       показываем подвижный слой ::before ниже */
-    background: var(--yellow);
+    classics: "Classics",
+    classicsNote: "Classics, perfected.",
+    signature: "Signature",
+    signatureNote: "Unexpected combinations with a signature touch.",
+    sorbets: "Sorbets",
+    sorbetsNote: "Pure fruit freshness.",
+
+    priceNote: "Classics — 850 ֏ per scoop · Signature — 1000 ֏ per scoop",
+
+    heritageEyebrow: "SINCE 1988",
+    heritageTitle: "A little<br><em>sunshine</em><br>every day.",
+    heritageText: "BARBARAC is inspired by the Mediterranean: long summer evenings, beautiful simplicity, and joy that needs no explanation.",
+
+    backTop: "Back to top ↑",
+    backTopAria: "Back to top",
+
+    visitEyebrow: "FIND US",
+    visitTitle: "Come<br><em>visit us.</em>",
+    visitText: "Stop by for your scoop of sunshine — we'd love to see you.",
+    visitAddressLabel: "Address",
+    visitAddress: "Open on map",
+    visitHoursLabel: "Opening hours",
+    visitHours: "Daily, 9:00 AM – 12:00 AM",
+    visitPhoneLabel: "Phone",
+    visitSocialLabel: "Social",
+
+    flavors: {
+      vanilla: "Vanilla",
+      chocolate: "Chocolate",
+      coffee: "Coffee",
+      coconut: "Coconut",
+      hazelnut: "Hazelnut",
+      stracciatella: "Stracciatella",
+      mintChocolate: "Mint chocolate",
+      frozenYogurt: "Frozen yogurt",
+
+      dubaiChocolate: "Dubai chocolate",
+      cookies: "Cookies",
+      whiteChocolate: "White chocolate",
+      pistachio: "Pistachio",
+      snikky: "Snickers",
+      speculoos: "Speculoos",
+      tiramisu: "Tiramisu",
+      saltedCaramel: "Salted caramel",
+      brownies: "Brownies",
+
+      apricotSorbet: "Apricot sorbet",
+      lemonSorbet: "Lemon sorbet",
+      strawberrySorbet: "Strawberry sorbet",
+      raspberrySorbet: "Raspberry sorbet",
+      mangoSorbet: "Mango sorbet",
+      passionFruit: "Passion fruit",
+      chocolateSorbet: "Chocolate sorbet"
+    }
+  },
+
+  hy: {
+    navCollection: "Հավաքածու",
+    navMenu: "Համեր",
+    navAbout: "Բրենդի մասին",
+    navVisit: "Կապ",
+    headerMenu: "Մենյու",
+
+    heroTitle: "Արևոտ համ,<br><em>ստեղծված հաճույքի համար։</em>",
+    heroIntro: "BARBARAC-ը պրեմիում պաղպաղակի և սորբեների հավաքածու է։ Մաքուր համ, գեղեցիկ ծես, մեկ կատարյալ պահ։",
+    heroButton: "Բացել մենյուն",
+    artCaption: "la dolce vita<br>յուրաքանչյուր գդալում",
+
+    collectionEyebrow: "ՊՐԵՄԻՈՒՄ ՀԱՎԱՔԱԾՈՒ",
+    statementTitle: "Փափուկ տեքստուրա։<br>Վառ բնավորություն։<br><em>Միայն էականը։</em>",
+    statementText: "Դասական բաղադրատոմսեր, հեղինակային համադրություններ և թարմացնող սորբեներ՝ այն համի համար, որին ուզում ես վերադառնալ։",
+
+    menuEyebrow: "ՄԵՆՅՈՒ",
+    menuTitle: "Ընտրիր քո<br><em>արևը։</em>",
+    oneScoop: "1 գնդիկ",
+    fromPrice: "850 ֏-ից",
+
+    classics: "Դասական",
+    classicsNote: "Դասականը՝ կատարելության հասցված։",
+    signature: "Ֆիրմային",
+    signatureNote: "Անսպասելի համադրություններ ֆիրմային ձեռագրով։",
+    sorbets: "Սորբեներ",
+    sorbetsNote: "Մաքուր մրգային թարմություն։",
+
+    priceNote: "Դասական — 850 ֏ մեկ գնդիկը · Ֆիրմային — 1000 ֏ մեկ գնդիկը",
+
+    heritageEyebrow: "1988 ԹՎԱԿԱՆԻՑ",
+    heritageTitle: "Մի քիչ<br><em>արև</em><br>ամեն օր։",
+    heritageText: "BARBARAC-ը ոգեշնչված է Միջերկրական ծովով՝ երկար ամառային երեկոներով, գեղեցիկ պարզությամբ և ուրախությամբ, որը բացատրություն չի պահանջում։",
+
+    backTop: "Վերև ↑",
+    backTopAria: "Վերև",
+
+    visitEyebrow: "ԳՏԻՐ ՄԵԶ",
+    visitTitle: "Այցելեք<br><em>մեզ։</em>",
+    visitText: "Եկեք ձեր արևի բաժինը վերցնելու — միշտ ուրախ կլինենք ձեզ տեսնել։",
+    visitAddressLabel: "Հասցե",
+    visitAddress: "Բացել քարտեզի վրա",
+    visitHoursLabel: "Աշխատանքային ժամեր",
+    visitHours: "Ամեն օր, 09:00 – 00:00",
+    visitPhoneLabel: "Հեռախոս",
+    visitSocialLabel: "Սոցցանցեր",
+
+    flavors: {
+      vanilla: "Վանիլ",
+      chocolate: "Շոկոլադ",
+      coffee: "Սուրճ",
+      coconut: "Կոկոս",
+      hazelnut: "Պնդուկ",
+      stracciatella: "Ստրաչատելլա",
+      mintChocolate: "Անանուխ-շոկոլադ",
+      frozenYogurt: "Սառեցված յոգուրտ",
+
+      dubaiChocolate: "Դուբայի շոկոլադ",
+      cookies: "Թխվածքաբլիթ",
+      whiteChocolate: "Սպիտակ շոկոլադ",
+      pistachio: "Պիստակ",
+      snikky: "Սնիկերս",
+      speculoos: "Սպեկուլոս",
+      tiramisu: "Տիրամիսու",
+      saltedCaramel: "Աղի կարամել",
+      brownies: "Բրաունի",
+
+      apricotSorbet: "Ծիրանի սորբե",
+      lemonSorbet: "Կիտրոնի սորբե",
+      strawberrySorbet: "Ելակի սորբե",
+      raspberrySorbet: "Մորու սորբե",
+      mangoSorbet: "Մանգոյի սորբե",
+      passionFruit: "Մարակույա",
+      chocolateSorbet: "Շոկոլադե սորբե"
+    }
   }
-
-  .texture-band::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    /* небольшой фиксированный запас в пикселях под ход параллакса,
-       без заметного "зума"/обрезки картинки */
-    top: -52px;
-    bottom: -52px;
-    z-index: 0;
-
-    /* На мобильных — квадратное фото, оно лучше кадрируется в узкую полосу,
-       чем широкая десктопная версия */
-    background: url("assets/texture-vanilla-square.jpg") center/cover no-repeat;
-
-    transform: translateY(var(--parallax-y, 0px));
-    will-change: transform;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .texture-band {
-    background-attachment: scroll;
-  }
-
-  .texture-band::before {
-    transform: none !important;
-  }
-}
-
-/* ---------- BRAND-MARK: название сайта, "залитое" текстурой мороженого ---------- */
-
-.brand-mark {
-  position: relative;
-  margin: 0;
-  text-align: center;
-  padding: 8vh 5vw 10vh;
-
-  font-family: "Playfair Display", serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: clamp(64px, 15vw, 220px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-
-  background-image:
-    linear-gradient(115deg,
-      transparent 35%,
-      rgba(255, 255, 255, .85) 48%,
-      transparent 61%),
-    url("assets/texture-vanilla-nologo.jpg");
-  background-size: 320% 100%, cover;
-  background-position: -60% 0, center 40%;
-  background-repeat: no-repeat, no-repeat;
-
-  color: var(--orange); /* фолбэк для браузеров без background-clip:text */
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-html.js .brand-mark.is-visible {
-  animation: brandShimmer 5s ease-in-out infinite;
-}
-
-/* Блик пробегает за первую половину цикла, вторая половина — пауза,
-   так что "вспышка" повторяется примерно каждые 5 секунд, а не один раз */
-@keyframes brandShimmer {
-  0%   { background-position: -60% 0, center 40%; }
-  45%  { background-position: 160% 0, center 40%; }
-  100% { background-position: 160% 0, center 40%; }
-}
-
-@supports not (background-clip: text) {
-  .brand-mark {
-    background: none;
-    color: var(--ink);
-    -webkit-text-fill-color: currentColor;
-  }
-
-  html.js .brand-mark.is-visible {
-    animation: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .brand-mark.is-visible {
-    animation: none;
-  }
-}
-
-/* ---------- ПЛАВНОЕ ПОЯВЛЕНИЕ БЛОКОВ ПРИ СКРОЛЛЕ ---------- */
-/* Работает только если JS успешно загрузился (html.js) — без JS всё видно сразу, ничего не потеряется */
-
-html.js .statement,
-html.js .menu-grid > .flavor-group,
-html.js .heritage > div,
-html.js .visit-info,
-html.js .visit-block,
-html.js .brand-mark {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .8s ease, transform .8s ease;
-}
-
-html.js .statement.is-visible,
-html.js .menu-grid > .flavor-group.is-visible,
-html.js .heritage > div.is-visible,
-html.js .visit-info.is-visible,
-html.js .visit-block.is-visible,
-html.js .brand-mark.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Карточки меню появляются с небольшой задержкой друг за другом */
-html.js .menu-grid > .flavor-group:nth-child(2) { transition-delay: .12s; }
-html.js .menu-grid > .flavor-group:nth-child(3) { transition-delay: .24s; }
-
-/* Блоки контактов тоже появляются каскадом */
-html.js .visit-block:nth-child(2) { transition-delay: .1s; }
-html.js .visit-block:nth-child(3) { transition-delay: .2s; }
-html.js .visit-block:nth-child(4) { transition-delay: .3s; }
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .statement,
-  html.js .menu-grid > .flavor-group,
-  html.js .heritage > div,
-  html.js .visit-info,
-  html.js .visit-block,
-  html.js .brand-mark {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  html.js .hero-copy > *,
-  html.js .hero-art {
-    opacity: 1;
-    animation: none;
-  }
-}
-
-/* ============================================================
-   v5 — цветные шарики мороженого у каждого вкуса, секция "Найти
-   нас" (для длины страницы), больше анимаций.
-   ============================================================ */
-
-/* ---------- ШАПКА: лёгкая тень при прокрутке ---------- */
-
-.site-header {
-  transition: box-shadow .3s ease;
-}
-
-.site-header.is-scrolled {
-  box-shadow: 0 10px 30px rgba(32, 32, 29, .08);
-}
-
-/* ---------- HERO: мягкое появление при загрузке страницы ---------- */
-
-@keyframes riseIn {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: none; }
-}
-
-@keyframes heroArtIn {
-  from { opacity: 0; transform: scale(.94); }
-  to   { opacity: 1; transform: none; }
-}
-
-html.js .hero-copy > * {
-  opacity: 0;
-  animation: riseIn .9s ease forwards;
-}
-
-html.js .hero-copy .eyebrow  { animation-delay: .05s; }
-html.js .hero-copy h1        { animation-delay: .18s; }
-html.js .hero-copy .intro    { animation-delay: .34s; }
-html.js .hero-copy .button   { animation-delay: .5s; }
-
-html.js .hero-art {
-  opacity: 0;
-  animation: heroArtIn 1s ease forwards;
-  animation-delay: .22s;
-}
-
-/* ---------- ТОЧКИ У КАЖДОГО ВКУСА, В СТИЛЕ ЛОГОТИПА ---------- */
-/* Вместо фото-текстуры мороженого — компактная золотая точка, перекликающаяся
-   с узором из точек на логотипе бренда. Просто и чисто, не спорит со списком. */
-
-.flavor-group li {
-  position: relative;
-  padding-left: 26px;
-}
-
-.flavor-group li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 50%;
-  width: 9px;
-  height: 9px;
-  transform: translateY(-50%);
-  border-radius: 50%;
-
-  background: radial-gradient(circle at 32% 28%, #fff6da, var(--yellow) 55%, #d9a53a 100%);
-  box-shadow: 0 1px 3px rgba(32, 32, 29, .25);
-
-  transition: transform .3s ease, box-shadow .3s ease;
-}
-
-html.js .flavor-group li:hover::before {
-  transform: translateY(-50%) scale(1.7);
-  box-shadow: 0 2px 6px rgba(32, 32, 29, .35);
-}
-
-/* ---------- Каскадное появление строк списка вкусов ---------- */
-
-html.js .flavor-group li {
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity .5s ease, transform .5s ease;
-}
-
-html.js .flavor-group.is-visible li {
-  opacity: 1;
-  transform: none;
-}
-
-html.js .flavor-group.is-visible li:nth-child(1) { transition-delay: .04s; }
-html.js .flavor-group.is-visible li:nth-child(2) { transition-delay: .09s; }
-html.js .flavor-group.is-visible li:nth-child(3) { transition-delay: .14s; }
-html.js .flavor-group.is-visible li:nth-child(4) { transition-delay: .19s; }
-html.js .flavor-group.is-visible li:nth-child(5) { transition-delay: .24s; }
-html.js .flavor-group.is-visible li:nth-child(6) { transition-delay: .29s; }
-html.js .flavor-group.is-visible li:nth-child(7) { transition-delay: .34s; }
-html.js .flavor-group.is-visible li:nth-child(8) { transition-delay: .39s; }
-html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
-
-/* ---------- НАЙТИ НАС: новая секция для длины страницы ---------- */
-
-.visit {
-  max-width: var(--max);
-  margin: auto;
-  padding: 14vh 5vw;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8vw;
-  align-items: start;
-
-  border-top: 1px solid var(--line);
-}
-
-.visit-info h2 {
-  font-size: clamp(44px, 5.5vw, 68px);
-  margin-bottom: 20px;
-}
-
-.visit-info > p:last-child {
-  max-width: 420px;
-  color: #666159;
-  line-height: 1.8;
-  font-size: 16px;
-}
-
-.visit-details {
-  display: grid;
-  gap: 30px;
-}
-
-.visit-block {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
-}
-
-.visit-block:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-/* ---------- Иконки вместо голых подписей ---------- */
-
-.visit-icon {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--ink);
-
-  box-shadow: 0 3px 10px rgba(32, 32, 29, .1);
-
-  transition: transform .35s ease, background .35s ease, color .35s ease;
-}
-
-.visit-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.visit-block:hover .visit-icon {
-  background: var(--orange);
-  color: #fff;
-  transform: translateY(-3px) rotate(-6deg);
-}
-
-.visit-label {
-  display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .15em;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-.visit-block p {
-  font-size: 17px;
-  margin: 0;
-}
-
-.visit-block a {
-  transition: color .25s;
-}
-
-.visit-block > div > p a:hover {
-  color: var(--orange);
-}
-
-/* Кнопки-иконки соцсетей */
-
-.visit-social {
-  display: flex;
-  gap: 10px;
-}
-
-.visit-social-btn {
-  width: 30px;
-  height: 30px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--ink);
-
-  box-shadow: 0 3px 10px rgba(32, 32, 29, .1);
-
-  transition: transform .3s ease, background .3s ease, color .3s ease;
-}
-
-.visit-social-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.visit-social-btn:hover {
-  background: var(--orange);
-  color: #fff;
-  transform: translateY(-3px) scale(1.06);
-}
-
-@media (max-width: 800px) {
-  .visit {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 10vh 5vw;
+};
+
+const STORAGE_KEY = "barbarac-lang";
+
+function applyLanguage(lang) {
+  const dict = translations[lang] || translations.ru;
+
+  // Plain text nodes
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) {
+      el.textContent = dict[key];
+    }
+  });
+
+  // HTML nodes (allow <br>, <em>)
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-html");
+    if (dict[key] !== undefined) {
+      el.innerHTML = dict[key];
+    }
+  });
+
+  // aria-label attributes
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-aria");
+    if (dict[key] !== undefined) {
+      el.setAttribute("aria-label", dict[key]);
+    }
+  });
+
+  // Flavor list items
+  document.querySelectorAll("[data-flavor]").forEach((el) => {
+    const key = el.getAttribute("data-flavor");
+    if (dict.flavors && dict.flavors[key] !== undefined) {
+      el.textContent = dict.flavors[key];
+    }
+  });
+
+  // Update <html lang="">
+  document.documentElement.setAttribute("lang", lang === "hy" ? "hy" : lang);
+
+  // Update active state on switcher buttons
+  document.querySelectorAll("[data-lang]").forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+  });
+
+  try {
+    localStorage.setItem(STORAGE_KEY, lang);
+  } catch (e) {
+    // ignore storage errors (private mode, etc.)
   }
 }
 
-/* ---------- ГЕРБ/ЭМБЛЕМА: лёгкое покачивание, будто медальон на ленте ---------- */
+function initLanguageSwitcher() {
+  document.querySelectorAll("[data-lang]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLanguage(btn.getAttribute("data-lang"));
+    });
+  });
 
-@keyframes emblemFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-8px) rotate(-2deg); }
-}
-
-html.js .heritage-emblem {
-  animation: emblemFloat 6s ease-in-out infinite;
-}
-
-html.js .heritage-emblem img {
-  transition: transform .4s ease;
-}
-
-html.js .heritage-emblem:hover img {
-  transform: scale(1.06);
-}
-
-/* ---------- ЗЕРНО: едва заметная фотографическая "плёнка" по всей странице ---------- */
-/* Убирает ощущение стерильно-гладкого экрана, добавляя микрошум поверх всего.
-   pointer-events:none + очень низкая непрозрачность — не мешает читать и кликать. */
-
-body {
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-
-  opacity: .035;
-  mix-blend-mode: overlay;
-
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .heritage-emblem {
-    animation: none;
-  }
-}
-
-/* ---------- ПЛАВАЮЩАЯ КНОПКА "НАВЕРХ" ---------- */
-/* Скрыта в начале страницы, появляется после того, как прокручено больше
-   половины (см. initBackToTop в script.js) — обычная практика для сайтов. */
-
-.back-to-top {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 50;
-
-  width: 46px;
-  height: 46px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-
-  box-shadow: 0 10px 24px rgba(32, 32, 29, .25);
-
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-
-  transition: opacity .35s ease, transform .35s ease, visibility .35s, background .3s ease;
-}
-
-.back-to-top svg {
-  width: 20px;
-  height: 20px;
-}
-
-.back-to-top.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.back-to-top:hover {
-  background: var(--orange);
-}
-
-@media (max-width: 800px) {
-  .back-to-top {
-    right: 16px;
-    bottom: 16px;
-    width: 42px;
-    height: 42px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .back-to-top {
-    transition: opacity .35s ease, visibility .35s;
-  }
-}
-
-/* ---------- ПРЕЛОАДЕР: логотип + точки-"солнце" перед открытием сайта ---------- */
-/* Без JS (html.no-js) вообще не показываем — сайт просто сразу видно.
-   С JS показываем кольцо точек, крутящееся вокруг неподвижного логотипа,
-   а затем плавно скрываем (см. initSplash в script.js). */
-
-html.no-js .splash {
-  display: none;
-}
-
-.splash {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: var(--paper);
-
-  opacity: 1;
-  visibility: visible;
-  transition: opacity .6s ease, visibility .6s;
-}
-
-.splash.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.splash-ring {
-  position: relative;
-  width: 130px;
-  height: 130px;
-
-  animation: splashSpin 3.2s linear infinite;
-}
-
-.splash-dot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-
-  background: radial-gradient(circle at 32% 28%, #fff6da, var(--yellow) 55%, #d9a53a 100%);
-  box-shadow: 0 1px 3px rgba(32, 32, 29, .25);
-}
-
-.splash-dot:nth-child(1) { transform: rotate(0deg)   translate(65px); }
-.splash-dot:nth-child(2) { transform: rotate(45deg)  translate(65px); }
-.splash-dot:nth-child(3) { transform: rotate(90deg)  translate(65px); }
-.splash-dot:nth-child(4) { transform: rotate(135deg) translate(65px); }
-.splash-dot:nth-child(5) { transform: rotate(180deg) translate(65px); }
-.splash-dot:nth-child(6) { transform: rotate(225deg) translate(65px); }
-.splash-dot:nth-child(7) { transform: rotate(270deg) translate(65px); }
-.splash-dot:nth-child(8) { transform: rotate(315deg) translate(65px); }
-
-@keyframes splashSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-.splash-logo {
-  position: absolute;
-  width: 76px;
-  height: auto;
-  z-index: 1;
-}
-
-@media (max-width: 800px) {
-  .splash-ring {
-    width: 96px;
-    height: 96px;
+  let saved = null;
+  try {
+    saved = localStorage.getItem(STORAGE_KEY);
+  } catch (e) {
+    // ignore
   }
 
-  .splash-dot:nth-child(1) { transform: rotate(0deg)   translate(48px); }
-  .splash-dot:nth-child(2) { transform: rotate(45deg)  translate(48px); }
-  .splash-dot:nth-child(3) { transform: rotate(90deg)  translate(48px); }
-  .splash-dot:nth-child(4) { transform: rotate(135deg) translate(48px); }
-  .splash-dot:nth-child(5) { transform: rotate(180deg) translate(48px); }
-  .splash-dot:nth-child(6) { transform: rotate(225deg) translate(48px); }
-  .splash-dot:nth-child(7) { transform: rotate(270deg) translate(48px); }
-  .splash-dot:nth-child(8) { transform: rotate(315deg) translate(48px); }
-
-  .splash-logo {
-    width: 58px;
-  }
+  const initialLang = saved && translations[saved] ? saved : "ru";
+  applyLanguage(initialLang);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .splash-ring {
-    animation: none;
+document.addEventListener("DOMContentLoaded", initLanguageSwitcher);
+
+// ---------- Плавное появление блоков при скролле ----------
+
+function initScrollReveal() {
+  const targets = document.querySelectorAll(
+    ".statement, .menu-grid > .flavor-group, .heritage > div, .visit-info, .visit-block, .brand-mark"
+  );
+
+  if (!targets.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    // На всякий случай, если браузер совсем древний — просто показать всё сразу
+    targets.forEach((el) => el.classList.add("is-visible"));
+    return;
   }
 
-  .splash {
-    transition: opacity .3s ease, visibility .3s;
-  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+  );
+
+  targets.forEach((el) => observer.observe(el));
 }
+
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+
+// ---------- Тень у шапки при прокрутке ----------
+
+function initHeaderScroll() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const onScroll = () => {
+    header.classList.toggle("is-scrolled", window.scrollY > 12);
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+document.addEventListener("DOMContentLoaded", initHeaderScroll);
+
+// ---------- Параллакс текстурной полосы — только для мобильных ----------
+// На десктопе движение картинки даёт обычный CSS (background-attachment: fixed,
+// см. decor.css) — трогать не нужно, там всё и так хорошо. А вот на мобильных
+// браузерах fixed фактически не работает, поэтому там то же самое движение
+// имитируем через JS: двигаем слой ::before через CSS-переменную --parallax-y.
+
+function initTextureParallax() {
+  const band = document.querySelector(".texture-band");
+  if (!band) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  if (prefersReducedMotion) return;
+
+  const strength = 96; // размах смещения в пикселях (см. запас в decor.css)
+  const mobileQuery = window.matchMedia("(max-width: 800px)");
+  let ticking = false;
+  let inView = false;
+
+  const update = () => {
+    ticking = false;
+    if (!inView || !mobileQuery.matches) return;
+
+    const rect = band.getBoundingClientRect();
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+    const progress = (viewportH - rect.top) / (viewportH + rect.height);
+    const clamped = Math.min(1, Math.max(0, progress));
+    const offset = (clamped - 0.5) * strength;
+
+    band.style.setProperty("--parallax-y", offset.toFixed(1) + "px");
+  };
+
+  const requestUpdate = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) requestUpdate();
+        });
+      },
+      { rootMargin: "20% 0px 20% 0px" }
+    );
+    observer.observe(band);
+  } else {
+    inView = true;
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate, { passive: true });
+  requestUpdate();
+}
+
+document.addEventListener("DOMContentLoaded", initTextureParallax);
+
+// ---------- Плавающая кнопка "Наверх": появляется после половины прокрутки ----------
+
+function initBackToTop() {
+  const btn = document.querySelector(".back-to-top");
+  if (!btn) return;
+
+  const update = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+    btn.classList.toggle("is-visible", progress > 0.5);
+  };
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+}
+
+document.addEventListener("DOMContentLoaded", initBackToTop);
+
+// ---------- Прелоадер: логотип + точки-"солнце" перед открытием сайта ----------
+// Показываем минимум minDuration, чтобы не мигало на быстрых устройствах,
+// но не дольше maxDuration — если что-то грузится долго, сайт всё равно
+// откроется, а не "зависнет" за заставкой.
+
+function initSplash() {
+  const splash = document.getElementById("splash");
+  const wrap = document.getElementById("splashLogoWrap");
+  if (!splash || !wrap) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Без анимации — просто убираем заставку сразу, без полёта и вращения
+  if (prefersReducedMotion) {
+    splash.remove();
+    return;
+  }
+
+  const holdDuration = 2200; // сколько крутятся точки, прежде чем логотип полетит
+  const flyDuration = 850; // сколько длится перелёт в шапку
+  const maxDuration = 4500; // подстраховка, если что-то пошло не так
+  const start = performance.now();
+
+  document.documentElement.style.overflow = "hidden";
+
+  let started = false;
+
+  const finish = () => {
+    splash.classList.add("is-hidden");
+    document.documentElement.style.overflow = "";
+    window.setTimeout(() => splash.remove(), 500);
+  };
+
+  const fly = () => {
+    if (started) return;
+    started = true;
+
+    const headerLogo = document.querySelector(".site-header .brand-logo img");
+    const from = wrap.getBoundingClientRect();
+    const to = headerLogo ? headerLogo.getBoundingClientRect() : null;
+
+    if (to && to.width > 0) {
+      const scale = to.width / from.width;
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+
+      wrap.style.transition = `transform ${flyDuration}ms cubic-bezier(.65, 0, .35, 1)`;
+      wrap.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+
+      let doneFired = false;
+      const onDone = () => {
+        if (doneFired) return;
+        doneFired = true;
+        finish();
+      };
+      wrap.addEventListener("transitionend", onDone, { once: true });
+      window.setTimeout(onDone, flyDuration + 200);
+    } else {
+      // Не нашли логотип в шапке — просто аккуратно скрываем заставку
+      finish();
+    }
+  };
+
+  const scheduleFly = () => {
+    const elapsed = performance.now() - start;
+    const wait = Math.max(0, holdDuration - elapsed);
+    window.setTimeout(fly, wait);
+  };
+
+  if (document.readyState === "complete") {
+    scheduleFly();
+  } else {
+    window.addEventListener("load", scheduleFly, { once: true });
+  }
+
+  window.setTimeout(fly, maxDuration);
+}
+
+initSplash();
