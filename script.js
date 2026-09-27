@@ -367,8 +367,8 @@ function initTextureParallax() {
   ).matches;
   if (prefersReducedMotion) return;
 
-  const desktopStrength = 46; // общий размах смещения в пикселях (десктоп)
-  const mobileStrength = 150; // на телефоне эффект заметно сильнее — там его лучше видно
+  const desktopStrength = 44; // общий размах смещения в пикселях (десктоп)
+  const mobileStrength = 68; // на телефоне чуть заметнее, но без "зума" картинки (см. запас в decor.css)
   const mobileQuery = window.matchMedia("(max-width: 800px)");
   let ticking = false;
   let inView = false;
