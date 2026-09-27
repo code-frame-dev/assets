@@ -341,3 +341,65 @@ function initHeaderScroll() {
 }
 
 document.addEventListener("DOMContentLoaded", initHeaderScroll);
+
+// ---------- Параллакс текстурной полосы (работает и на десктопе, и на телефоне) ----------
+// background-attachment: fixed на мобильных браузерах практически не двигается при
+// прокрутке — картинка выглядела "мёртвой". Вместо этого сами двигаем внутренний
+// слой ::before через CSS-переменную --parallax-y, синхронно с скроллом.
+
+function initTextureParallax() {
+  const band = document.querySelector(".texture-band");
+  if (!band) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  if (prefersReducedMotion) return;
+
+  const strength = 46; // общий размах смещения в пикселях
+  let ticking = false;
+  let inView = false;
+
+  const update = () => {
+    ticking = false;
+    if (!inView) return;
+
+    const rect = band.getBoundingClientRect();
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+    // 0 — полоса ещё внизу за пределами экрана, 1 — уже ушла наверх за экран
+    const progress = (viewportH - rect.top) / (viewportH + rect.height);
+    const clamped = Math.min(1, Math.max(0, progress));
+    const offset = (clamped - 0.5) * strength;
+
+    band.style.setProperty("--parallax-y", offset.toFixed(1) + "px");
+  };
+
+  const requestUpdate = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) requestUpdate();
+        });
+      },
+      { rootMargin: "20% 0px 20% 0px" }
+    );
+    observer.observe(band);
+  } else {
+    inView = true;
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate, { passive: true });
+  requestUpdate();
+}
+
+document.addEventListener("DOMContentLoaded", initTextureParallax);
