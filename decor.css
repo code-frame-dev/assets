@@ -50,6 +50,12 @@
 
 /* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
 
+/* Параллакс теперь собственный, на JS (см. initTextureParallax в script.js),
+   а не через background-attachment: fixed — тот на мобильных браузерах (Safari/Chrome
+   на телефоне) фактически не двигается при прокрутке, поэтому картинка казалась
+   "мёртвой". JS-версия двигает внутренний слой ::before и одинаково плавно
+   работает и на десктопе, и на телефоне. */
+
 .texture-band {
   position: relative;
   overflow: hidden;
@@ -58,43 +64,34 @@
   height: 42vh;
   min-height: 260px;
   max-height: 480px;
-  background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
+  background: var(--yellow);
+}
 
-  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы (только десктоп) */
-  background-attachment: fixed;
+.texture-band::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -18%;
+  height: 136%;
+  z-index: 0;
+
+  background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
+
+  transform: translateY(var(--parallax-y, 0px));
+  will-change: transform;
 }
 
 @media (max-width: 800px) {
   .texture-band {
     height: 28vh;
     min-height: 180px;
-
-    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем,
-       но взамен даём картинке собственное "дыхание" (медленный зум),
-       чтобы полоса не была совсем статичной */
-    background-attachment: scroll;
-    background-image: none;
-  }
-
-  .texture-band::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-
-    background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
-    animation: bandKenBurns 14s ease-in-out infinite alternate;
-  }
-
-  @keyframes bandKenBurns {
-    from { transform: scale(1); }
-    to   { transform: scale(1.12); }
   }
 }
 
-@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .texture-band::before {
-    animation: none;
+    transform: none !important;
   }
 }
 
