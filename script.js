@@ -460,13 +460,30 @@ function initSplash() {
   const maxDuration = 4500; // подстраховка, если что-то пошло не так
   const start = performance.now();
 
-  document.documentElement.style.overflow = "hidden";
+  // Блокируем скролл так, чтобы это надёжно работало и в мобильных браузерах
+  // (обычный overflow:hidden на iOS/Android иногда "копит" скролл, пока
+  // заставка открыта, и страница потом открывается не с начала, а с середины).
+  // Вместо этого фиксируем body на месте и просто возвращаем скролл на то же
+  // место (0,0 при обычной загрузке страницы) при закрытии заставки.
+  const scrollY = window.scrollY || window.pageYOffset || 0;
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.left = "0";
+  document.body.style.right = "0";
+  document.body.style.width = "100%";
 
   let started = false;
 
   const finish = () => {
     splash.classList.add("is-hidden");
-    document.documentElement.style.overflow = "";
+
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, scrollY);
+
     window.setTimeout(() => splash.remove(), 500);
   };
 
