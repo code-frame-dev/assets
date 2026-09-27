@@ -36,6 +36,7 @@ const translations = {
     heritageText: "BARBARAC вдохновлён Средиземноморьем: долгими летними вечерами, красивой простотой и радостью, которую не нужно объяснять.",
 
     backTop: "Наверх ↑",
+    backTopAria: "Наверх",
 
     visitEyebrow: "НАЙТИ НАС",
     visitTitle: "Заходите<br><em>в гости.</em>",
@@ -112,6 +113,7 @@ const translations = {
     heritageText: "BARBARAC is inspired by the Mediterranean: long summer evenings, beautiful simplicity, and joy that needs no explanation.",
 
     backTop: "Back to top ↑",
+    backTopAria: "Back to top",
 
     visitEyebrow: "FIND US",
     visitTitle: "Come<br><em>visit us.</em>",
@@ -188,6 +190,7 @@ const translations = {
     heritageText: "BARBARAC-ը ոգեշնչված է Միջերկրական ծովով՝ երկար ամառային երեկոներով, գեղեցիկ պարզությամբ և ուրախությամբ, որը բացատրություն չի պահանջում։",
 
     backTop: "Վերև ↑",
+    backTopAria: "Վերև",
 
     visitEyebrow: "ԳՏԻՐ ՄԵԶ",
     visitTitle: "Այցելեք<br><em>մեզ։</em>",
@@ -248,6 +251,14 @@ function applyLanguage(lang) {
     const key = el.getAttribute("data-i18n-html");
     if (dict[key] !== undefined) {
       el.innerHTML = dict[key];
+    }
+  });
+
+  // aria-label attributes
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-aria");
+    if (dict[key] !== undefined) {
+      el.setAttribute("aria-label", dict[key]);
     }
   });
 
@@ -356,7 +367,9 @@ function initTextureParallax() {
   ).matches;
   if (prefersReducedMotion) return;
 
-  const strength = 46; // общий размах смещения в пикселях
+  const desktopStrength = 46; // общий размах смещения в пикселях (десктоп)
+  const mobileStrength = 150; // на телефоне эффект заметно сильнее — там его лучше видно
+  const mobileQuery = window.matchMedia("(max-width: 800px)");
   let ticking = false;
   let inView = false;
 
@@ -364,6 +377,7 @@ function initTextureParallax() {
     ticking = false;
     if (!inView) return;
 
+    const strength = mobileQuery.matches ? mobileStrength : desktopStrength;
     const rect = band.getBoundingClientRect();
     const viewportH = window.innerHeight || document.documentElement.clientHeight;
 
@@ -403,3 +417,22 @@ function initTextureParallax() {
 }
 
 document.addEventListener("DOMContentLoaded", initTextureParallax);
+
+// ---------- Плавающая кнопка "Наверх": появляется после половины прокрутки ----------
+
+function initBackToTop() {
+  const btn = document.querySelector(".back-to-top");
+  if (!btn) return;
+
+  const update = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+    btn.classList.toggle("is-visible", progress > 0.5);
+  };
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+}
+
+document.addEventListener("DOMContentLoaded", initBackToTop);
