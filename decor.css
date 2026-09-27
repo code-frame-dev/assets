@@ -4,10 +4,11 @@
 
    ВАЖНО: hero и большая надпись BARBARAC используют assets/texture-vanilla-nologo.jpg
    — версию БЕЗ вытисненного лого "Barbarac" в кадре. Полоса-баннер (.texture-band),
-   наоборот, специально показывает фото С лого (assets/texture-vanilla-wide.jpg) —
-   единственное место на странице, где оно нарочно повторяется. В меню вкусов фото
-   больше не используется — вместо шариков там простые золотые точки в стиле
-   логотипа (см. .flavor-group li::before). */
+   наоборот, специально показывает фото С лого — на десктопе широкую версию
+   (assets/texture-vanilla-wide.jpg), а на мобильных квадратную (assets/texture-vanilla-square.jpg),
+   которая лучше кадрируется в узкую полосу. В меню вкусов фото больше не
+   используется — вместо шариков там простые золотые точки в стиле логотипа
+   (см. .flavor-group li::before). */
 
 /* ---------- HERO-ART: настоящая текстура вместо плоского жёлтого круга ---------- */
 
@@ -50,51 +51,64 @@
 
 /* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
 
+/* Десктоп: та самая "старая хорошая" версия — background-attachment: fixed,
+   картинка мягко проступает при прокрутке. На мобильных браузерах fixed
+   фактически не двигается, поэтому там то же самое движение имитируется
+   через JS (см. initTextureParallax в script.js), двигая внутренний слой
+   ::before через CSS-переменную --parallax-y. */
+
 .texture-band {
   position: relative;
-  overflow: hidden;
 
   width: 100%;
   height: 42vh;
   min-height: 260px;
   max-height: 480px;
-  background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
 
-  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы (только десктоп) */
+  background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
   background-attachment: fixed;
 }
 
 @media (max-width: 800px) {
   .texture-band {
-    height: 28vh;
-    min-height: 180px;
+    /* Полоса на мобильных выше — сама картинка при этом не увеличена/не обрезана,
+       просто занимает больше места */
+    height: 38vh;
+    min-height: 260px;
+    overflow: hidden;
 
-    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем,
-       но взамен даём картинке собственное "дыхание" (медленный зум),
-       чтобы полоса не была совсем статичной */
-    background-attachment: scroll;
-    background-image: none;
+    /* fixed на телефонах не двигается — прячем статичный фон и вместо него
+       показываем подвижный слой ::before ниже */
+    background: var(--yellow);
   }
 
   .texture-band::before {
     content: "";
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    /* небольшой фиксированный запас в пикселях под ход параллакса,
+       без заметного "зума"/обрезки картинки */
+    top: -36px;
+    bottom: -36px;
     z-index: 0;
 
-    background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
-    animation: bandKenBurns 14s ease-in-out infinite alternate;
-  }
+    /* На мобильных — квадратное фото, оно лучше кадрируется в узкую полосу,
+       чем широкая десктопная версия */
+    background: url("assets/texture-vanilla-square.jpg") center/cover no-repeat;
 
-  @keyframes bandKenBurns {
-    from { transform: scale(1); }
-    to   { transform: scale(1.12); }
+    transform: translateY(var(--parallax-y, 0px));
+    will-change: transform;
   }
 }
 
-@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
+  .texture-band {
+    background-attachment: scroll;
+  }
+
   .texture-band::before {
-    animation: none;
+    transform: none !important;
   }
 }
 
@@ -409,12 +423,12 @@ html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
 
 .visit-social {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .visit-social-btn {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 
   display: grid;
   place-items: center;
@@ -491,5 +505,64 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   html.js .heritage-emblem {
     animation: none;
+  }
+}
+
+/* ---------- ПЛАВАЮЩАЯ КНОПКА "НАВЕРХ" ---------- */
+/* Скрыта в начале страницы, появляется после того, как прокручено больше
+   половины (см. initBackToTop в script.js) — обычная практика для сайтов. */
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 50;
+
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+
+  box-shadow: 0 10px 24px rgba(32, 32, 29, .25);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+
+  transition: opacity .35s ease, transform .35s ease, visibility .35s, background .3s ease;
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover {
+  background: var(--orange);
+}
+
+@media (max-width: 800px) {
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: opacity .35s ease, visibility .35s;
   }
 }
