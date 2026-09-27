@@ -353,10 +353,11 @@ function initHeaderScroll() {
 
 document.addEventListener("DOMContentLoaded", initHeaderScroll);
 
-// ---------- Параллакс текстурной полосы (работает и на десктопе, и на телефоне) ----------
-// background-attachment: fixed на мобильных браузерах практически не двигается при
-// прокрутке — картинка выглядела "мёртвой". Вместо этого сами двигаем внутренний
-// слой ::before через CSS-переменную --parallax-y, синхронно с скроллом.
+// ---------- Параллакс текстурной полосы — только для мобильных ----------
+// На десктопе движение картинки даёт обычный CSS (background-attachment: fixed,
+// см. decor.css) — трогать не нужно, там всё и так хорошо. А вот на мобильных
+// браузерах fixed фактически не работает, поэтому там то же самое движение
+// имитируем через JS: двигаем слой ::before через CSS-переменную --parallax-y.
 
 function initTextureParallax() {
   const band = document.querySelector(".texture-band");
@@ -367,21 +368,18 @@ function initTextureParallax() {
   ).matches;
   if (prefersReducedMotion) return;
 
-  const desktopStrength = 44; // общий размах смещения в пикселях (десктоп)
-  const mobileStrength = 68; // на телефоне чуть заметнее, но без "зума" картинки (см. запас в decor.css)
+  const strength = 68; // размах смещения в пикселях (см. запас в decor.css)
   const mobileQuery = window.matchMedia("(max-width: 800px)");
   let ticking = false;
   let inView = false;
 
   const update = () => {
     ticking = false;
-    if (!inView) return;
+    if (!inView || !mobileQuery.matches) return;
 
-    const strength = mobileQuery.matches ? mobileStrength : desktopStrength;
     const rect = band.getBoundingClientRect();
     const viewportH = window.innerHeight || document.documentElement.clientHeight;
 
-    // 0 — полоса ещё внизу за пределами экрана, 1 — уже ушла наверх за экран
     const progress = (viewportH - rect.top) / (viewportH + rect.height);
     const clamped = Math.min(1, Math.max(0, progress));
     const offset = (clamped - 0.5) * strength;
