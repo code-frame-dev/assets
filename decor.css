@@ -72,8 +72,10 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: -18%;
-  height: 136%;
+  /* Небольшой фиксированный запас в пикселях (а не в процентах!) — ровно
+     под ход параллакса, без заметного "зума"/обрезки картинки */
+  top: -24px;
+  bottom: -24px;
   z-index: 0;
 
   background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
@@ -84,15 +86,15 @@
 
 @media (max-width: 800px) {
   .texture-band {
-    height: 28vh;
-    min-height: 180px;
+    /* Полоса на мобильных стала заметно выше — сама картинка при этом
+       не увеличивается/не обрезается сильнее, просто занимает больше места */
+    height: 38vh;
+    min-height: 260px;
   }
 
-  /* На мобильных эффект сделан заметнее (см. mobileStrength в script.js) —
-     поэтому слою нужен запас побольше, чтобы не показать пустые края у фото */
   .texture-band::before {
-    top: -40%;
-    height: 180%;
+    top: -36px;
+    bottom: -36px;
   }
 }
 
