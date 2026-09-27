@@ -2,12 +2,11 @@
    Реальные фото текстуры мороженого (сгенерированные) вместо CSS-имитации.
    Подключается ПОСЛЕ styles.css.
 
-   ВАЖНО: hero и большая надпись BARBARAC используют assets/texture-vanilla-nologo.jpg
-   — версию БЕЗ вытисненного лого "Barbarac" в кадре (иначе лого повторялось бы).
-   Полоса-баннер (.texture-band), наоборот, специально показывает фото С лого
-   (assets/texture-vanilla-wide.jpg). Шарики вкусов в меню используют
-   texture-vanilla-square.jpg — там кадрирование уводит взгляд в угол фото,
-   подальше от лого, так что это не мешает. */
+   ВАЖНО: hero, большая надпись BARBARAC и шарики вкусов в меню используют
+   assets/texture-vanilla-nologo.jpg — версию БЕЗ вытисненного лого "Barbarac"
+   в кадре. Полоса-баннер (.texture-band), наоборот, специально показывает
+   фото С лого (assets/texture-vanilla-wide.jpg) — единственное место на
+   странице, где оно нарочно повторяется. */
 
 /* ---------- HERO-ART: настоящая текстура вместо плоского жёлтого круга ---------- */
 
@@ -255,7 +254,7 @@ html.js .hero-art {
 
   background-image:
     radial-gradient(circle at 30% 24%, rgba(255, 255, 255, .8), transparent 48%),
-    url("assets/texture-vanilla-square.jpg");
+    url("assets/texture-vanilla-nologo.jpg");
   background-size: 100% 100%, 240% 240%;
   background-position: 0 0, var(--scoop-pos, 20% 20%);
   background-repeat: no-repeat, no-repeat;
