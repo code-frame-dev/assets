@@ -442,40 +442,77 @@ document.addEventListener("DOMContentLoaded", initBackToTop);
 
 function initSplash() {
   const splash = document.getElementById("splash");
-  if (!splash) return;
+  const wrap = document.getElementById("splashLogoWrap");
+  if (!splash || !wrap) return;
 
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  const minDuration = prefersReducedMotion ? 0 : 1100;
-  const maxDuration = 2500;
+  // Без анимации — просто убираем заставку сразу, без полёта и вращения
+  if (prefersReducedMotion) {
+    splash.remove();
+    return;
+  }
+
+  const holdDuration = 2200; // сколько крутятся точки, прежде чем логотип полетит
+  const flyDuration = 850; // сколько длится перелёт в шапку
+  const maxDuration = 4500; // подстраховка, если что-то пошло не так
   const start = performance.now();
 
   document.documentElement.style.overflow = "hidden";
 
-  let hidden = false;
-  const hide = () => {
-    if (hidden) return;
-    hidden = true;
+  let started = false;
 
+  const finish = () => {
+    splash.classList.add("is-hidden");
+    document.documentElement.style.overflow = "";
+    window.setTimeout(() => splash.remove(), 500);
+  };
+
+  const fly = () => {
+    if (started) return;
+    started = true;
+
+    const headerLogo = document.querySelector(".site-header .brand-logo img");
+    const from = wrap.getBoundingClientRect();
+    const to = headerLogo ? headerLogo.getBoundingClientRect() : null;
+
+    if (to && to.width > 0) {
+      const scale = to.width / from.width;
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+
+      wrap.style.transition = `transform ${flyDuration}ms cubic-bezier(.65, 0, .35, 1)`;
+      wrap.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+
+      let doneFired = false;
+      const onDone = () => {
+        if (doneFired) return;
+        doneFired = true;
+        finish();
+      };
+      wrap.addEventListener("transitionend", onDone, { once: true });
+      window.setTimeout(onDone, flyDuration + 200);
+    } else {
+      // Не нашли логотип в шапке — просто аккуратно скрываем заставку
+      finish();
+    }
+  };
+
+  const scheduleFly = () => {
     const elapsed = performance.now() - start;
-    const wait = Math.max(0, minDuration - elapsed);
-
-    window.setTimeout(() => {
-      splash.classList.add("is-hidden");
-      document.documentElement.style.overflow = "";
-      window.setTimeout(() => splash.remove(), 700);
-    }, wait);
+    const wait = Math.max(0, holdDuration - elapsed);
+    window.setTimeout(fly, wait);
   };
 
   if (document.readyState === "complete") {
-    hide();
+    scheduleFly();
   } else {
-    window.addEventListener("load", hide, { once: true });
+    window.addEventListener("load", scheduleFly, { once: true });
   }
 
-  window.setTimeout(hide, maxDuration);
+  window.setTimeout(fly, maxDuration);
 }
 
 initSplash();
