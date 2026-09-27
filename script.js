@@ -368,7 +368,7 @@ function initTextureParallax() {
   ).matches;
   if (prefersReducedMotion) return;
 
-  const strength = 68; // размах смещения в пикселях (см. запас в decor.css)
+  const strength = 96; // размах смещения в пикселях (см. запас в decor.css)
   const mobileQuery = window.matchMedia("(max-width: 800px)");
   let ticking = false;
   let inView = false;
@@ -434,3 +434,48 @@ function initBackToTop() {
 }
 
 document.addEventListener("DOMContentLoaded", initBackToTop);
+
+// ---------- Прелоадер: логотип + точки-"солнце" перед открытием сайта ----------
+// Показываем минимум minDuration, чтобы не мигало на быстрых устройствах,
+// но не дольше maxDuration — если что-то грузится долго, сайт всё равно
+// откроется, а не "зависнет" за заставкой.
+
+function initSplash() {
+  const splash = document.getElementById("splash");
+  if (!splash) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const minDuration = prefersReducedMotion ? 0 : 1100;
+  const maxDuration = 2500;
+  const start = performance.now();
+
+  document.documentElement.style.overflow = "hidden";
+
+  let hidden = false;
+  const hide = () => {
+    if (hidden) return;
+    hidden = true;
+
+    const elapsed = performance.now() - start;
+    const wait = Math.max(0, minDuration - elapsed);
+
+    window.setTimeout(() => {
+      splash.classList.add("is-hidden");
+      document.documentElement.style.overflow = "";
+      window.setTimeout(() => splash.remove(), 700);
+    }, wait);
+  };
+
+  if (document.readyState === "complete") {
+    hide();
+  } else {
+    window.addEventListener("load", hide, { once: true });
+  }
+
+  window.setTimeout(hide, maxDuration);
+}
+
+initSplash();
