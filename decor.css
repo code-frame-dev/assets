@@ -87,6 +87,13 @@
     height: 28vh;
     min-height: 180px;
   }
+
+  /* На мобильных эффект сделан заметнее (см. mobileStrength в script.js) —
+     поэтому слою нужен запас побольше, чтобы не показать пустые края у фото */
+  .texture-band::before {
+    top: -40%;
+    height: 180%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -406,12 +413,12 @@ html.js .flavor-group.is-visible li:nth-child(9) { transition-delay: .44s; }
 
 .visit-social {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .visit-social-btn {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 
   display: grid;
   place-items: center;
@@ -488,5 +495,64 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   html.js .heritage-emblem {
     animation: none;
+  }
+}
+
+/* ---------- ПЛАВАЮЩАЯ КНОПКА "НАВЕРХ" ---------- */
+/* Скрыта в начале страницы, появляется после того, как прокручено больше
+   половины (см. initBackToTop в script.js) — обычная практика для сайтов. */
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 50;
+
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+
+  box-shadow: 0 10px 24px rgba(32, 32, 29, .25);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+
+  transition: opacity .35s ease, transform .35s ease, visibility .35s, background .3s ease;
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover {
+  background: var(--orange);
+}
+
+@media (max-width: 800px) {
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: opacity .35s ease, visibility .35s;
   }
 }
