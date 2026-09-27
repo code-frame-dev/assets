@@ -89,8 +89,8 @@
     right: 0;
     /* небольшой фиксированный запас в пикселях под ход параллакса,
        без заметного "зума"/обрезки картинки */
-    top: -36px;
-    bottom: -36px;
+    top: -52px;
+    bottom: -52px;
     z-index: 0;
 
     /* На мобильных — квадратное фото, оно лучше кадрируется в узкую полосу,
@@ -564,5 +564,108 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .back-to-top {
     transition: opacity .35s ease, visibility .35s;
+  }
+}
+
+/* ---------- ПРЕЛОАДЕР: логотип + точки-"солнце" перед открытием сайта ---------- */
+/* Без JS (html.no-js) вообще не показываем — сайт просто сразу видно.
+   С JS показываем кольцо точек, крутящееся вокруг неподвижного логотипа,
+   а затем плавно скрываем (см. initSplash в script.js). */
+
+html.no-js .splash {
+  display: none;
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--paper);
+
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .6s ease, visibility .6s;
+}
+
+.splash.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-ring {
+  position: relative;
+  width: 130px;
+  height: 130px;
+
+  animation: splashSpin 3.2s linear infinite;
+}
+
+.splash-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+
+  background: radial-gradient(circle at 32% 28%, #fff6da, var(--yellow) 55%, #d9a53a 100%);
+  box-shadow: 0 1px 3px rgba(32, 32, 29, .25);
+}
+
+.splash-dot:nth-child(1) { transform: rotate(0deg)   translate(65px); }
+.splash-dot:nth-child(2) { transform: rotate(45deg)  translate(65px); }
+.splash-dot:nth-child(3) { transform: rotate(90deg)  translate(65px); }
+.splash-dot:nth-child(4) { transform: rotate(135deg) translate(65px); }
+.splash-dot:nth-child(5) { transform: rotate(180deg) translate(65px); }
+.splash-dot:nth-child(6) { transform: rotate(225deg) translate(65px); }
+.splash-dot:nth-child(7) { transform: rotate(270deg) translate(65px); }
+.splash-dot:nth-child(8) { transform: rotate(315deg) translate(65px); }
+
+@keyframes splashSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.splash-logo {
+  position: absolute;
+  width: 76px;
+  height: auto;
+  z-index: 1;
+}
+
+@media (max-width: 800px) {
+  .splash-ring {
+    width: 96px;
+    height: 96px;
+  }
+
+  .splash-dot:nth-child(1) { transform: rotate(0deg)   translate(48px); }
+  .splash-dot:nth-child(2) { transform: rotate(45deg)  translate(48px); }
+  .splash-dot:nth-child(3) { transform: rotate(90deg)  translate(48px); }
+  .splash-dot:nth-child(4) { transform: rotate(135deg) translate(48px); }
+  .splash-dot:nth-child(5) { transform: rotate(180deg) translate(48px); }
+  .splash-dot:nth-child(6) { transform: rotate(225deg) translate(48px); }
+  .splash-dot:nth-child(7) { transform: rotate(270deg) translate(48px); }
+  .splash-dot:nth-child(8) { transform: rotate(315deg) translate(48px); }
+
+  .splash-logo {
+    width: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-ring {
+    animation: none;
+  }
+
+  .splash {
+    transition: opacity .3s ease, visibility .3s;
   }
 }
