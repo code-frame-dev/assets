@@ -43,7 +43,7 @@ const translations = {
     visitAddressLabel: "Адрес",
     visitAddress: "Открыть на карте",
     visitHoursLabel: "Часы работы",
-    visitHours: "Ежедневно, 08:30 – 00:00",
+    visitHours: "Ежедневно, 09:00 – 00:00",
     visitPhoneLabel: "Телефон",
     visitSocialLabel: "Соцсети",
 
@@ -119,7 +119,7 @@ const translations = {
     visitAddressLabel: "Address",
     visitAddress: "Open on map",
     visitHoursLabel: "Opening hours",
-    visitHours: "Daily, 8:30 AM – 12:00 AM",
+    visitHours: "Daily, 9:00 AM – 12:00 AM",
     visitPhoneLabel: "Phone",
     visitSocialLabel: "Social",
 
@@ -166,8 +166,8 @@ const translations = {
     artCaption: "la dolce vita<br>յուրաքանչյուր գդալում",
 
     collectionEyebrow: "ՊՐԵՄԻՈՒՄ ՀԱՎԱՔԱԾՈՒ",
-    statementTitle: "Փափուկ տեքստուրա։<br>Վառ բնավորություն։<br><em>Ոչինչ ավելորդ։</em>",
-    statementText: "Դասական բաղադրատոմսեր, հեղինակային զուգորդումներ և թարմացնող սորբեներ՝ այն համի համար, որին ուզում ես վերադառնալ։",
+    statementTitle: "Փափուկ տեքստուրա։<br>Վառ բնավորություն։<br><em>Միայն էականը։</em>",
+    statementText: "Դասական բաղադրատոմսեր, հեղինակային համադրություններ և թարմացնող սորբեներ՝ այն համի համար, որին ուզում ես վերադառնալ։",
 
     menuEyebrow: "ՄԵՆՅՈՒ",
     menuTitle: "Ընտրիր քո<br><em>արևը։</em>",
@@ -177,7 +177,7 @@ const translations = {
     classics: "Դասական",
     classicsNote: "Դասականը՝ կատարելության հասցված։",
     signature: "Ֆիրմային",
-    signatureNote: "Անսպասելի զուգորդումներ ֆիրմային ձեռագրով։",
+    signatureNote: "Անսպասելի համադրություններ ֆիրմային ձեռագրով։",
     sorbets: "Սորբեներ",
     sorbetsNote: "Մաքուր մրգային թարմություն։",
 
@@ -185,7 +185,7 @@ const translations = {
 
     heritageEyebrow: "1988 ԹՎԱԿԱՆԻՑ",
     heritageTitle: "Մի քիչ<br><em>արև</em><br>ամեն օր։",
-    heritageText: "BARBARAC-ը ներշնչված է Միջերկրածովով՝ երկար ամառային երեկոներով, գեղեցիկ պարզությամբ և ուրախությամբ, որը բացատրություն չի պահանջում։",
+    heritageText: "BARBARAC-ը ոգեշնչված է Միջերկրական ծովով՝ երկար ամառային երեկոներով, գեղեցիկ պարզությամբ և ուրախությամբ, որը բացատրություն չի պահանջում։",
 
     backTop: "Վերև ↑",
 
@@ -195,7 +195,7 @@ const translations = {
     visitAddressLabel: "Հասցե",
     visitAddress: "Բացել քարտեզի վրա",
     visitHoursLabel: "Աշխատանքային ժամեր",
-    visitHours: "Ամեն օր, 08:30 – 00:00",
+    visitHours: "Ամեն օր, 09:00 – 00:00",
     visitPhoneLabel: "Հեռախոս",
     visitSocialLabel: "Սոցցանցեր",
 
