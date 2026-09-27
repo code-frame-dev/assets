@@ -51,13 +51,16 @@
 /* ---------- ПОЛНОЭКРАННАЯ ПОЛОСА-БАННЕР между статьёй и меню ---------- */
 
 .texture-band {
+  position: relative;
+  overflow: hidden;
+
   width: 100%;
   height: 42vh;
   min-height: 260px;
   max-height: 480px;
   background: var(--yellow) url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
 
-  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы */
+  /* Лёгкий параллакс: фон "отстаёт" от прокрутки страницы (только десктоп) */
   background-attachment: fixed;
 }
 
@@ -66,8 +69,32 @@
     height: 28vh;
     min-height: 180px;
 
-    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем */
+    /* fixed-фон на мобильных часто дёргается и грузит батарею — отключаем,
+       но взамен даём картинке собственное "дыхание" (медленный зум),
+       чтобы полоса не была совсем статичной */
     background-attachment: scroll;
+    background-image: none;
+  }
+
+  .texture-band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background: url("assets/texture-vanilla-wide.jpg") center/cover no-repeat;
+    animation: bandKenBurns 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes bandKenBurns {
+    from { transform: scale(1); }
+    to   { transform: scale(1.12); }
+  }
+}
+
+@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+  .texture-band::before {
+    animation: none;
   }
 }
 
